@@ -7,17 +7,30 @@
 
 import SwiftUI
 
+enum Routes: Hashable {
+    case dashboard
+    case details(tagId: String)
+}
+
 struct ContentView: View {
+    @StateObject var navigationManager = NavigationManager<Routes>()
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack(path: $navigationManager.path) {
+            HomeView()
+                .navigationDestination(for: Routes.self) { route in
+                    switch route {
+                    case .dashboard:
+                        Text("Dashboard")
+                    case .details(let tagId):
+                        Text("Details for \(tagId)")
+                    }
+                }
         }
-        .padding()
+        .environmentObject(navigationManager)
     }
 }
+
 
 #Preview {
     ContentView()
