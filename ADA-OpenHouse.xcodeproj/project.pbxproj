@@ -10,9 +10,22 @@
 		2FBFAB2C2DD43FD70032B6B6 /* ADA-OpenHouse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ADA-OpenHouse.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		2FD61F272DD4D79F00B8772D /* Exceptions for "ADA-OpenHouse" folder in "ADA-OpenHouse" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 2FBFAB2B2DD43FD70032B6B6 /* ADA-OpenHouse */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		2FBFAB2E2DD43FD70032B6B6 /* ADA-OpenHouse */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				2FD61F272DD4D79F00B8772D /* Exceptions for "ADA-OpenHouse" folder in "ADA-OpenHouse" target */,
+			);
 			path = "ADA-OpenHouse";
 			sourceTree = "<group>";
 		};
@@ -255,6 +268,7 @@
 				DEVELOPMENT_TEAM = C4SQMCY5WT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ADA-OpenHouse/Info.plist";
 				INFOPLIST_KEY_NFCReaderUsageDescription = "Scan NFC plzzz";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -287,7 +301,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "ADA-OpenHouse/Info.plist";
-				INFOPLIST_KEY_NFCReaderUsageDescription = "Scan dulu anying";
+				INFOPLIST_KEY_NFCReaderUsageDescription = "Scan NFC plzzz";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
