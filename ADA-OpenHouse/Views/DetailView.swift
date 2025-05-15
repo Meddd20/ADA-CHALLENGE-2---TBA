@@ -10,6 +10,7 @@ import SwiftUI
 struct DetailView: View {
     var tagId: String
     
+    
     var body: some View {
         ScrollView {
             VStack {
