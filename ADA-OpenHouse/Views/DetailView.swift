@@ -4,12 +4,12 @@
 //
 //  Created by Ramdan on 14/05/25.
 //
+// aku aku aku
 
 import SwiftUI
 
 struct DetailView: View {
     var tagId: String
-    
     
     var body: some View {
         ScrollView {
