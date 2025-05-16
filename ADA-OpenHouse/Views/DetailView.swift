@@ -4,7 +4,6 @@
 //
 //  Created by Ramdan on 14/05/25.
 //
-// aku aku aku
 
 import SwiftUI
 
