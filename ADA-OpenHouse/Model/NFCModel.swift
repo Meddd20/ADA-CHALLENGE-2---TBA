@@ -34,11 +34,10 @@ class NFCReader: NSObject, ObservableObject, NFCNDEFReaderSessionDelegate {
             for message in messages {
                 for record in message.records {
                     if let text = String(data: record.payload, encoding: .utf8) {
-                        self.scannedMessage = text
+                        self.scannedMessage = "a_specific_string_id"
                     }
                 }
             }
         }
     }
 }
-
