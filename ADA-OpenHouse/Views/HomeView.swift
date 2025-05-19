@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct HomeView: View {
+    @EnvironmentObject var navManager: NavigationManager<Routes>
     @StateObject private var shakeMotionManager = ShakeMotionManger()
+    @StateObject private var nfcReader = NFCReader()
     @State private var isWaitOver = true
+    @State private var progress = 0.3
     
     var showSheetBinding: Binding<Bool> {
         Binding(get: {
@@ -29,43 +32,44 @@ struct HomeView: View {
     var body: some View {
         VStack(spacing: 20) {    
             Text("iTour")
-                .font(.system(size: 35, weight: .bold))
+                .font(.system(size: 35, weight: .heavy))
+                .fontWidth(.expanded)
                 .bold()
-                .padding(.top)
 
             Text("Shake to discover something hidden")
+                .font(.system(size: 22, weight: .medium))
+                .foregroundStyle(Color.black.opacity(0.1))
+                .fontWidth(.expanded)
                 .multilineTextAlignment(.center)
-                .font(.title)
-                .foregroundStyle(.secondary)
                 .padding(.horizontal)
 
-            VStack {
-                CarouselView(imageNames: ["jensen_huang", "knight", "jensen_huang", "knight", "jensen_huang", "knight"])
-            }
-            .frame(maxHeight: .infinity)
+            CarouselView(imageNames: ["nfc-image1", "nfc-image2", "nfc-image3", "nfc-image4", "nfc-image5"])
+                .frame(width: 352, height: 320)
             
-            VStack {
-                Button(action: {
-                    nfcReader.beginScanning()
-                }) {
-                    Circle()
-                        .foregroundColor(.blue)
-                        .overlay {
-                            VStack {
-                                Image(systemName: "wifi")
-                                    .foregroundColor(.white)
-                                    .font(.system(size: 100))
-                                Text("Scan Tag")
-                                    .foregroundStyle(.white)
-                                    .font(.title)
-                                    .fontWeight(.bold)
-                            }
-                        }
-                        .frame(width: 200)
-                        .shadow(color: Color.darkBlue, radius: 0, x: 0, y: 5)
+            Text("You've discovered 4/10 hidden spots in ADA!")
+                .font(.system(size: 17, weight: .medium))
+                .foregroundStyle(Color.black)
+                .fontWidth(.expanded)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
+            
+            ProgressView(value: progress)
+                .progressViewStyle(LinearProgressViewStyle(tint: Color.primaryBlue))
+                .padding(EdgeInsets(top: 15, leading: 40, bottom: 25, trailing: 40))
+
+            Button(action: {
+                nfcReader.beginScanning()
+            }) {
+                HStack (spacing: 20){
+                    Image("nfc-scan-icon")
+                        .frame(maxWidth: 43)
+                    Text("Scan Tag")
+                        .font(.system(size: 24, weight: .medium))
                 }
-                .padding(.bottom)
-                
+                .frame(width: 264, height: 81)
+                .background(Color.primaryBlue)
+                .foregroundStyle(.white)
+                .cornerRadius(20)
             }
             
         }
