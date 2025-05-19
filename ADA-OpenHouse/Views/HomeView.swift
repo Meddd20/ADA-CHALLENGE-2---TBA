@@ -4,38 +4,75 @@
 //
 //  Created by Ramdan on 14/05/25.
 //
-//aaaa
+
 import SwiftUI
 
 struct HomeView: View {
-    @StateObject private var nfcReader = NFCReader()
-    @EnvironmentObject var navManager: NavigationManager<Routes>
+    @StateObject private var shakeMotionManager = ShakeMotionManger()
+    @State private var isWaitOver = true
     
+    var showSheetBinding: Binding<Bool> {
+        Binding(get: {
+            isWaitOver && shakeMotionManager.didShakeDetected
+        }, set: { newValue in
+            if !newValue {
+                shakeMotionManager.didShakeDetected = false
+                isWaitOver = false
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 15) {
+                    isWaitOver = true
+                }
+            }
+        })
+    }
+        
     var body: some View {
-        VStack(spacing: 20) {
-            Text("NFC Reader")
-                .font(.largeTitle)
-                .bold()
-            Button("Start NFC Scan") {
-                nfcReader.beginScanning()
+        VStack() {
+            Spacer()
+                .frame(height: 60)
+            
+            Text("iTour")
+                .font(.system(size: 35, weight: .bold))
+            
+            Spacer()
+                .frame(height: 470)
+            
+            Button("Scan NFC") {
+                
             }
             .padding()
-            .background(Color.blue)
-            .foregroundColor(.white)
+            .frame(width: 250, height: 60)
+            .background(Color.primaryBlue)
+            .foregroundStyle(.white)
             .cornerRadius(10)
+            
+            Text(isWaitOver ? "LALALA" : "BEBEBE")
+            
+            Spacer()
+            
         }
         .padding()
-        .onChange(of: nfcReader.scannedMessage, {
-            if(nfcReader.scannedMessage.isEmpty) {
-                return;
+        .onAppear {
+            shakeMotionManager.detectShakeMotion()
+        }
+        .onDisappear {
+            shakeMotionManager.resetShakeDetection()
+        }
+        .sheet(
+            isPresented: showSheetBinding,
+            onDismiss: {
+            isWaitOver = false
+            shakeMotionManager.didShakeDetected = false
+                
+            DispatchQueue.main.asyncAfter(deadline: .now() + 15) {
+                isWaitOver = true
+                shakeMotionManager.detectShakeMotion()
             }
-            
-            navManager.path.append(.instruction(tagId: nfcReader.scannedMessage))
-        })
-        
+        }) {
+            BottomSheetView(shakeMotionManager: shakeMotionManager)
+                .presentationCornerRadius(30)
+                .presentationDragIndicator(.visible)
+                .presentationDetents([.fraction(0.45)])
+        }
     }
-}
-
-#Preview {
-    HomeView()
 }
