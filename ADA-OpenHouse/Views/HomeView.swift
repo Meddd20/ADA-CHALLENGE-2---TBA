@@ -4,7 +4,7 @@
 //
 //  Created by Ramdan on 14/05/25.
 //
-//aaaa
+
 import SwiftUI
 
 struct HomeView: View {
@@ -13,28 +13,58 @@ struct HomeView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Text("NFC Reader")
-                .font(.largeTitle)
+            Text("iTour")
+                .font(.system(size: 50))
+                .fontWeight(.heavy)
                 .bold()
-            Button("Start NFC Scan") {
-                nfcReader.beginScanning()
+                .padding(.top)
+            Text("Shake to discover something hidden")
+                .multilineTextAlignment(.center)
+                .font(.title)
+                .foregroundStyle(.secondary)
+                .padding(.horizontal)
+            VStack {
+                CarouselView(imageNames: ["jensen_huang", "knight", "jensen_huang", "knight", "jensen_huang", "knight"])
             }
-            .padding()
-            .background(Color.blue)
-            .foregroundColor(.white)
-            .cornerRadius(10)
+            .frame(maxHeight: .infinity)
+            
+            VStack {
+                Button(action: {
+                    nfcReader.beginScanning()
+                }) {
+                    Circle()
+                        .foregroundColor(.blue)
+                        .overlay {
+                            VStack {
+                                Image(systemName: "wifi")
+                                    .foregroundColor(.white)
+                                    .font(.system(size: 100))
+                                Text("Scan Tag")
+                                    .foregroundStyle(.white)
+                                    .font(.title)
+                                    .fontWeight(.bold)
+                            }
+                        }
+                        .frame(width: 200)
+                        .shadow(color: Color.darkBlue, radius: 0, x: 0, y: 5)
+                }
+                .padding(.bottom)
+                
+            }
         }
         .padding()
-        .onChange(of: nfcReader.scannedMessage, {
-            if(nfcReader.scannedMessage.isEmpty) {
-                return;
+        .onAppear() {
+            nfcReader.assignOnScan {
+                if(nfcReader.scannedMessage.isEmpty) {
+                    return;
+                }
+                
+                navManager.path.append(.instruction(tagId: nfcReader.scannedMessage))
             }
-            
-            navManager.path.append(.instruction(tagId: nfcReader.scannedMessage))
-        })
-        
+        }
     }
 }
+
 
 #Preview {
     HomeView()
