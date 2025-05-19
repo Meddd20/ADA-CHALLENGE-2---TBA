@@ -11,6 +11,7 @@ import CoreNFC
 class NFCReader: NSObject, ObservableObject, NFCNDEFReaderSessionDelegate {
     @Published var scannedMessage: String = ""
     private var session: NFCNDEFReaderSession?
+    var onScan: (() -> Void)?
     
     func beginScanning() {
         guard NFCNDEFReaderSession.readingAvailable else {
@@ -34,10 +35,22 @@ class NFCReader: NSObject, ObservableObject, NFCNDEFReaderSessionDelegate {
             for message in messages {
                 for record in message.records {
                     if let text = String(data: record.payload, encoding: .utf8) {
-                        self.scannedMessage = "a_specific_string_id"
+                        self.scannedMessage = text
+                        
+                        if let onScan = self.onScan {
+                            onScan()
+                        }
                     }
                 }
             }
         }
+    }
+    
+    func readerSessionDidBecomeActive(_ session: NFCNDEFReaderSession) {
+        
+    }
+    
+    func assignOnScan(_ closure: @escaping () -> Void) {
+        self.onScan = closure
     }
 }

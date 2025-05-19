@@ -27,33 +27,58 @@ struct HomeView: View {
     }
         
     var body: some View {
-        VStack() {
-            Spacer()
-                .frame(height: 60)
-            
+        VStack(spacing: 20) {    
             Text("iTour")
                 .font(.system(size: 35, weight: .bold))
+                .bold()
+                .padding(.top)
+
+            Text("Shake to discover something hidden")
+                .multilineTextAlignment(.center)
+                .font(.title)
+                .foregroundStyle(.secondary)
+                .padding(.horizontal)
+
+            VStack {
+                CarouselView(imageNames: ["jensen_huang", "knight", "jensen_huang", "knight", "jensen_huang", "knight"])
+            }
+            .frame(maxHeight: .infinity)
             
-            Spacer()
-                .frame(height: 470)
-            
-            Button("Scan NFC") {
+            VStack {
+                Button(action: {
+                    nfcReader.beginScanning()
+                }) {
+                    Circle()
+                        .foregroundColor(.blue)
+                        .overlay {
+                            VStack {
+                                Image(systemName: "wifi")
+                                    .foregroundColor(.white)
+                                    .font(.system(size: 100))
+                                Text("Scan Tag")
+                                    .foregroundStyle(.white)
+                                    .font(.title)
+                                    .fontWeight(.bold)
+                            }
+                        }
+                        .frame(width: 200)
+                        .shadow(color: Color.darkBlue, radius: 0, x: 0, y: 5)
+                }
+                .padding(.bottom)
                 
             }
-            .padding()
-            .frame(width: 250, height: 60)
-            .background(Color.primaryBlue)
-            .foregroundStyle(.white)
-            .cornerRadius(10)
-            
-            Text(isWaitOver ? "LALALA" : "BEBEBE")
-            
-            Spacer()
             
         }
         .padding()
         .onAppear {
             shakeMotionManager.detectShakeMotion()
+            nfcReader.assignOnScan {
+                if(nfcReader.scannedMessage.isEmpty) {
+                    return;
+                }
+                
+                navManager.path.append(.instruction(tagId: nfcReader.scannedMessage))
+            }
         }
         .onDisappear {
             shakeMotionManager.resetShakeDetection()
@@ -75,4 +100,8 @@ struct HomeView: View {
                 .presentationDetents([.fraction(0.45)])
         }
     }
+}
+
+#Preview {
+    HomeView()
 }
