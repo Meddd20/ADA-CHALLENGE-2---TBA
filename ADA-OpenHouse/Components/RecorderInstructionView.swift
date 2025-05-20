@@ -35,6 +35,12 @@ struct RecorderInstructionView: View {
                 .onChange(of: recorder.isTooLoud, {
                     if recorder.isTooLoud {
                         showAlert = true
+                        let generator = UIImpactFeedbackGenerator(style: .heavy)
+                        generator.prepare()
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            generator.impactOccurred()
+                        }
                         
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                             navManager.path = .init([.details(tagId: tagId)])
