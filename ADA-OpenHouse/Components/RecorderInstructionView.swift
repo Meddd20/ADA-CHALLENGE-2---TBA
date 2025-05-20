@@ -9,56 +9,80 @@ import SwiftUI
 
 struct RecorderInstructionView: View {
     @ObservedObject var recorder = AudioRecorder()
+    @EnvironmentObject var navManager: NavigationManager<Routes>
+    @State private var showAlert = false
     
-    private func loudnessHeight(from dB: Float, treshold: Float) -> CGFloat {
-        // Normalize: -160 to 0 dB mapped to 0–200 pts
-        let normalized = max(0, min(1, (dB + (40 + treshold)) / (40 + treshold)))
-        return CGFloat(normalized) * 100
-    }
-    
+    var tagId: String
+
     var body: some View {
+        // Instruction Card
         VStack {
-            Text("Scream as loud as you can!")
-                .font(.headline)
-                .padding(.top)
             VStack {
-                
-                Text(String(format: "%.2f%%", loudnessHeight(from: recorder.currentLoudness, treshold: recorder.loudnessThreshold)))
-                    .foregroundColor(recorder.isTooLoud ? .red : .primary)
-                
-                ProgressView(value: loudnessHeight(from: recorder.currentLoudness, treshold: recorder.loudnessThreshold), total: 100)
-                
-                if recorder.isTooLoud {
-                    Text("⚠️ Loud Sound Detected!")
-                        .foregroundColor(.red)
-                        .bold()
+                Text("Read this carefully")
+                    .font(.title2)
+                VStack {
+                    Image(systemName: "waveform")
+                        .font(.system(size: 100))
+                        .foregroundStyle(.blue)
+                        .padding(.vertical, 30)
+                    Text(String(format: "%.0f%%", loudnessHeight(from: recorder.currentLoudness, treshold: recorder.loudnessThreshold)))
+                        .foregroundColor(recorder.isTooLoud ? .red : .primary)
+                    ProgressView(value: loudnessHeight(from: recorder.currentLoudness, treshold: recorder.loudnessThreshold), total: 100)
+                    Text("Scream as loud as you can!")
+                        .font(.title3)
                 }
-                
-                HStack {
-                    Button(action: {
-                        if(recorder.isRecording) {
-                            recorder.stopRecording()
-                        } else {
-                            recorder.startRecording()
+                .onDisappear { recorder.stopRecording() }
+                .onChange(of: recorder.isTooLoud, {
+                    if recorder.isTooLoud {
+                        showAlert = true
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                            navManager.path = .init([.details(tagId: tagId)])
                         }
-                    }) {
-                        Text(recorder.isRecording ? "Stop" : "Start")
-                            .frame(maxWidth: .infinity)
                     }
-                    .padding(.vertical, 5)
-                    .background(
-                        recorder.isRecording ? Color.red : Color.blue
-                    )
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
+                })
+            }
+            .padding(.vertical, 40)
+            .padding(.horizontal, 40)
+            .overlay {
+                RoundedRectangle(cornerRadius: 20)
+                    .stroke(.secondary, lineWidth: 0.5)
+                    .shadow(color: .primary, radius: 2)
+            }
+        }
+        .padding(.vertical)
+        .padding(.horizontal, 40)
+        
+        Spacer()
+        
+        VStack {
+            Button(action: {
+                if(recorder.isRecording) {
+                    recorder.stopRecording()
+                } else {
+                    recorder.startRecording()
                 }
+            }) {
+                Text(recorder.isRecording ? "Stop" : "Start Now")
+                    .frame(maxWidth: .infinity)
+                    .font(.title)
+                    .fontWeight(.bold)
             }
-            .onDisappear {
-                recorder.stopRecording()
-            }
-        }    }
+            .padding(.vertical, 30)
+            .background(
+                recorder.isRecording ? Color.red : Color.blue
+            )
+            .foregroundColor(.white)
+            .cornerRadius(30)
+        }
+        .padding(.horizontal, 40)
+        .alert(isPresented: $showAlert) {
+            Alert(title: Text("Oops!"), message: Text("You scream too loud!"))
+        }
+    }
+       
 }
 
 #Preview {
-    RecorderInstructionView()
+    RecorderInstructionView(tagId: "123")
 }

@@ -13,16 +13,13 @@ struct InstructionView: View {
     var body: some View {
         VStack(alignment: .center, spacing: 20) {
             // Title
-            Text("Instruction")
-                .font(.system(size: 40, weight: .bold, design: .rounded))
-                .shadow(color: .black.opacity(0.3), radius: 5, x: 0, y: 3) // Add a subtle shadow
-                .padding(.bottom, 10)
-            
-            // Instruction Card
-            VStack {
-                RecorderInstructionView()
-            }
-            .padding()
+            Text("iTour")
+                .font(.system(size: 50))
+                .fontWeight(.heavy)
+                .bold()
+                .padding(.top)
+            Spacer()
+            RecorderInstructionView(tagId: tagId)
         }
     }
 }

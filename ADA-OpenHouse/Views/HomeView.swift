@@ -24,28 +24,32 @@ struct HomeView: View {
                 .foregroundStyle(.secondary)
                 .padding(.horizontal)
             VStack {
-                CarouselView(imageNames: ["jensen_huang", "knight", "jensen_huang", "knight", "jensen_huang", "knight"])
+                CarouselView(imageNames: ["home-1", "home-2"])
             }
             .frame(maxHeight: .infinity)
+            .padding(.horizontal)
             
             VStack {
                 Button(action: {
                     nfcReader.beginScanning()
                 }) {
-                    Circle()
+                    RoundedRectangle(cornerRadius: 30)
                         .foregroundColor(.blue)
                         .overlay {
                             VStack {
-                                Image(systemName: "wifi")
-                                    .foregroundColor(.white)
-                                    .font(.system(size: 100))
+                                Image("nfc-scan")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: 86.71)
                                 Text("Scan Tag")
                                     .foregroundStyle(.white)
                                     .font(.title)
                                     .fontWeight(.bold)
                             }
                         }
-                        .frame(width: 200)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 192)
+                        .padding(.horizontal)
                         .shadow(color: Color.darkBlue, radius: 0, x: 0, y: 5)
                 }
                 .padding(.bottom)
