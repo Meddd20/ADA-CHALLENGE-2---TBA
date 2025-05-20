@@ -9,7 +9,7 @@ class AudioRecorder: ObservableObject {
     @Published var isTooLoud: Bool = false
     @Published var isRecording: Bool = false
 
-    let loudnessThreshold: Float = -2.5 // Adjust this threshold as needed
+    let loudnessThreshold: Float = -10 // Adjust this threshold as needed
 
     init() {
         let audioSession = AVAudioSession.sharedInstance()
@@ -34,17 +34,20 @@ class AudioRecorder: ObservableObject {
 
     func startRecording() {
         audioRecorder.record()
+        currentLoudness = 0.0
         isRecording = true
         isTooLoud = false
         timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
             self.audioRecorder.updateMeters()
             let dB = self.audioRecorder.averagePower(forChannel: 0)
-            self.currentLoudness = dB
+            if(loudnessHeight(from: dB, treshold: self.loudnessThreshold)) > 0 {
+                self.currentLoudness = dB
+            }
             print(dB)
             if(dB >= self.loudnessThreshold) {
                 self.audioRecorder.stop()
-                self.isTooLoud = dB >= self.loudnessThreshold
                 self.isRecording = false
+                self.isTooLoud = true
             }
         }
     }
@@ -54,5 +57,12 @@ class AudioRecorder: ObservableObject {
         isRecording = false
         timer?.invalidate()
         isTooLoud = false
+        currentLoudness = 0.0
     }
+}
+
+func loudnessHeight(from dB: Float, treshold: Float) -> CGFloat {
+    // Normalize: -40 to [treshhold] dB mapped to 0–100
+    let normalized = max(0, min(1, (dB + 40) / (40 + treshold)))
+    return CGFloat(normalized) * 100
 }
