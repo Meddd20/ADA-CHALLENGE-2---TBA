@@ -20,7 +20,6 @@ struct IndexView: View {
     var body: some View {
         NavigationStack(path: $navigationManager.path) {
             HomeView()
-                .environmentObject(navigationManager)
                 .onOpenURL { url in
                     handleURL(url)
                 }
@@ -35,6 +34,7 @@ struct IndexView: View {
                     }
                 }
         }
+        .environmentObject(navigationManager)
     }
     
     func handleURL(_ url: URL) {
