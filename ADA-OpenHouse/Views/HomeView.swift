@@ -88,7 +88,12 @@ struct HomeView: View {
                     return;
                 }
                 
-                navManager.path.append(.instruction(tagId: nfcReader.scannedMessage))
+                let cleaned = nfcReader.scannedMessage.trimmingCharacters(in: .controlCharacters.union(.whitespacesAndNewlines))
+                
+                let tagId = extractTagId(URL(string: cleaned))
+                if let tagId = tagId {
+                    navManager.path.append(.instruction(tagId: tagId))
+                }
             }
         }
         .onDisappear {
