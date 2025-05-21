@@ -88,7 +88,7 @@ struct HomeView: View {
                     return;
                 }
                 
-                navManager.path.append(.instruction(tagId: nfcReader.scannedMessage))
+                navManager.path.append(.instruction(tagId: String(nfcReader.scannedMessage.dropFirst(3))))
             }
         }
         .onDisappear {

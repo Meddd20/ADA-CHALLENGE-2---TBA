@@ -43,7 +43,6 @@ class AudioRecorder: ObservableObject {
             if(loudnessHeight(from: dB, treshold: self.loudnessThreshold)) > 0 {
                 self.currentLoudness = dB
             }
-            print(dB)
             if(dB >= self.loudnessThreshold) {
                 self.audioRecorder.stop()
                 self.isRecording = false
