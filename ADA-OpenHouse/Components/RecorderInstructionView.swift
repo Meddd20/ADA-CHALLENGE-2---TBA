@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct RecorderInstructionView: View {
-    @ObservedObject var recorder = AudioRecorder()
+    @StateObject var recorder = AudioRecorder()
     @EnvironmentObject var navManager: NavigationManager<Routes>
     @State private var showAlert = false
+    @StateObject var haptic = HapticModel()
     
     var tagId: String
 
@@ -30,17 +31,13 @@ struct RecorderInstructionView: View {
                     ProgressView(value: loudnessHeight(from: recorder.currentLoudness, treshold: recorder.loudnessThreshold), total: 100)
                     Text("Scream as loud as you can!")
                         .font(.title3)
+                        .multilineTextAlignment(.center )
                 }
                 .onDisappear { recorder.stopRecording() }
                 .onChange(of: recorder.isTooLoud, {
                     if recorder.isTooLoud {
                         showAlert = true
-                        let generator = UIImpactFeedbackGenerator(style: .heavy)
-                        generator.prepare()
-                        
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                            generator.impactOccurred()
-                        }
+                        haptic.playHaptic(duration: 1.0)
                         
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                             navManager.path = .init([.details(tagId: tagId)])
