@@ -19,7 +19,8 @@ struct InstructionView: View {
                 .bold()
                 .padding(.top)
             Spacer()
-            RecorderInstructionView(tagId: tagId)
+//            RecorderInstructionView(tagId: tagId)
+            CompassView(tagId: tagId)
         }
     }
 }
