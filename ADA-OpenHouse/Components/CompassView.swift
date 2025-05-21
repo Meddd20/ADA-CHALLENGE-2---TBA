@@ -72,6 +72,9 @@ struct CompassView: View {
                         timer = nil
                     }
                 })
+                .onDisappear {
+                    timer?.invalidate()
+                }
                 
         }
         .alert(isPresented: $isPresented) {
