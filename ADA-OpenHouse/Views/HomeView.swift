@@ -14,6 +14,8 @@ struct HomeView: View {
     @State private var isWaitOver = true
     @State private var progress = 0.3
     
+    @StateObject private var haptic = HapticModel()
+    
     var showSheetBinding: Binding<Bool> {
         Binding(get: {
             isWaitOver && shakeMotionManager.didShakeDetected
@@ -71,6 +73,11 @@ struct HomeView: View {
                 .foregroundStyle(.white)
                 .cornerRadius(20)
             }
+            .onChange(of: shakeMotionManager.didShakeDetected, {
+                if(shakeMotionManager.didShakeDetected) {
+                    haptic.playHaptic(duration: 1)
+                }
+            })
             
         }
         .padding()
