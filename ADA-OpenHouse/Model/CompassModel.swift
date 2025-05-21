@@ -1,5 +1,5 @@
 //
-//  CompassModle.swift
+//  CompassModel.swift
 //  ADA-OpenHouse
 //
 //  Created by Ramdan on 21/05/25.
