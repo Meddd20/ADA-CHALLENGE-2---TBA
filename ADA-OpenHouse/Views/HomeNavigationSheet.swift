@@ -10,8 +10,10 @@ import SwiftUI
 struct BottomSheetView: View {
     @Environment(\.dismiss) private var dismiss
     @ObservedObject var shakeMotionManager: ShakeMotionManger
+    @StateObject private var viewModel = HomeViewModel()
     @State private var progress: Double = 0.0
     @State private var timer: Timer?
+    @State private var currentRiddle = ""
     
     let duration: TimeInterval = 10.0
     
@@ -25,7 +27,7 @@ struct BottomSheetView: View {
             Text("Riddle")
                 .font(.system(size: 27, weight: .heavy))
             
-            Text("I turn beans into liquid gold. Hot and strong, I never get old.")
+            Text(currentRiddle)
                 .font(.system(size: 17, weight: .medium))
                 .multilineTextAlignment(.center)
             
@@ -39,7 +41,10 @@ struct BottomSheetView: View {
             
         }
         .padding()
-        .onAppear { startTimer() }
+        .onAppear {
+            startTimer()
+            currentRiddle = viewModel.shuffleRiddle()
+        }
         .onDisappear {
             timer?.invalidate()
             shakeMotionManager.didShakeDetected = false
