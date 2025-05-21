@@ -8,7 +8,7 @@
 import CoreMotion
 import Combine
 
-class PunchMotionManager {
+class PunchMotionManager: ObservableObject {
     private let motionManager = CMMotionManager()
     private let queue = OperationQueue()
     

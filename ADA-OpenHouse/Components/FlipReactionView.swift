@@ -117,7 +117,7 @@ struct FlipReactionView: View {
             
             Spacer()
         }
-        .onChange(of: motion.isPhoneFaceDown) { newValue in
+        .onChange(of: motion.isPhoneFaceDown) { oldValue, newValue in
             guard gameStarted else { return }
             
             if newValue {
