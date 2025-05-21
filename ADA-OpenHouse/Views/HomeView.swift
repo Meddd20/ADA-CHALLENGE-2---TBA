@@ -87,8 +87,13 @@ struct HomeView: View {
                 if(nfcReader.scannedMessage.isEmpty) {
                     return;
                 }
+              
+                let cleaned = nfcReader.scannedMessage.trimmingCharacters(in: .controlCharacters.union(.whitespacesAndNewlines))
                 
-                navManager.path.append(.instruction(tagId: String(nfcReader.scannedMessage.dropFirst(3))))
+                let tagId = extractTagId(URL(string: cleaned))
+                if let tagId = tagId {
+                    navManager.path.append(.instruction(tagId: tagId))
+                }
             }
         }
         .onDisappear {
