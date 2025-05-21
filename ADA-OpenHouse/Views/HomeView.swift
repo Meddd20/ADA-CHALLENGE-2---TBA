@@ -87,7 +87,7 @@ struct HomeView: View {
                 if(nfcReader.scannedMessage.isEmpty) {
                     return;
                 }
-                
+              
                 let cleaned = nfcReader.scannedMessage.trimmingCharacters(in: .controlCharacters.union(.whitespacesAndNewlines))
                 
                 let tagId = extractTagId(URL(string: cleaned))
