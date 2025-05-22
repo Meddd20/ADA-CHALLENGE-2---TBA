@@ -19,8 +19,10 @@ struct InstructionView: View {
                 .bold()
                 .padding(.top)
             Spacer()
+            PunchDetection(tagId: tagId)
+//            FlipReactionView(tagId: tagId)
 //            RecorderInstructionView(tagId: tagId)
-            CompassView(tagId: tagId)
+            // CompassView(tagId: tagId)
 //             FlipReactionView(tagId: tagId)
 //            RecorderInstructionView(tagId: tagId)
         }
