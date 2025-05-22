@@ -10,7 +10,7 @@ import SpriteKit
 struct BallBalancingGameView: View {
     @State private var gameState: GameState = .playing
     @EnvironmentObject var navManager: NavigationManager<Routes>
-
+    @StateObject private var haptic = HapticModel()
     var tagId: String
     
     enum GameState {
@@ -28,7 +28,10 @@ struct BallBalancingGameView: View {
                             gameState = didWin ? .won : .lost
                             
                             if didWin {
-                                navManager.path = .init([.details(tagId: tagId)])
+                                haptic.playHaptic()
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                    navManager.path = .init([.details(tagId: tagId)])
+                                }
                             }
                         }
                         return scene
