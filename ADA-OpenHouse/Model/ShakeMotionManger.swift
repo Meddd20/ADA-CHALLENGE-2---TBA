@@ -30,13 +30,6 @@ class ShakeMotionManger: ObservableObject {
                     self.didShakeDetected = true
                     print("Shake Detected")
                     
-                    let generator = UIImpactFeedbackGenerator(style: .rigid)
-                    generator.prepare()
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                        generator.impactOccurred()
-                    }
-                    
                     self.motionManager.stopAccelerometerUpdates()
                 }
             }
