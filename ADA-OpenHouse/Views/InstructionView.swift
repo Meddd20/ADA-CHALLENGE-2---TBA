@@ -21,6 +21,8 @@ struct InstructionView: View {
             Spacer()
 //            RecorderInstructionView(tagId: tagId)
             CompassView(tagId: tagId)
+//             FlipReactionView(tagId: tagId)
+//            RecorderInstructionView(tagId: tagId)
         }
     }
 }
