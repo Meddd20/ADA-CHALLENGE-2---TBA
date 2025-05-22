@@ -9,6 +9,7 @@ import SwiftUI
 
 struct FlipReactionView: View {
     @StateObject var motion = FlipReactionManager()
+    @StateObject private var haptic = HapticModel()
     @EnvironmentObject var navManager: NavigationManager<Routes>
     
     @State private var gameStarted = false
@@ -16,6 +17,7 @@ struct FlipReactionView: View {
     @State private var startTime: Date?
     @State private var reactionTime: Double?
     @State private var isTooEarly = false
+    @State private var isPresented = false
     
     var tagId: String
     let reactionDelay = Double.random(in: 3...6)
@@ -133,7 +135,9 @@ struct FlipReactionView: View {
                 }
                 
                 if time <= reactionTreshold {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                    haptic.playHaptic()
+                    isPresented = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                         navManager.path = .init([.details(tagId: tagId)])
                     }
                 }
@@ -144,6 +148,9 @@ struct FlipReactionView: View {
         }
         .animation(.easeInOut, value: reactionTime)
         .padding()
+        .alert(isPresented: $isPresented) {
+            Alert(title: Text("Congratulations!"), message: Text("You got it right!"))
+        }
     }
 
     
