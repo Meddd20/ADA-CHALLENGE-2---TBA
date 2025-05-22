@@ -13,13 +13,14 @@ struct InstructionView: View {
     var body: some View {
         VStack(alignment: .center, spacing: 20) {
             // Title
-            Text("iTour")
-                .font(.system(size: 50))
-                .fontWeight(.heavy)
-                .bold()
-                .padding(.top)
-            Spacer()
-            RecorderInstructionView(tagId: tagId)
+//            Text("iTour")
+//                .font(.system(size: 50))
+//                .fontWeight(.heavy)
+//                .bold()
+//                .padding(.top)
+//            Spacer()
+//            RecorderInstructionView(tagId: tagId)
+            BallBalancingGameView(tagId: tagId)
         }
     }
 }
