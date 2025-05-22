@@ -13,18 +13,19 @@ struct InstructionView: View {
     var body: some View {
         VStack(alignment: .center, spacing: 20) {
             // Title
-            Text("iTour")
-                .font(.system(size: 50))
-                .fontWeight(.heavy)
-                .bold()
-                .padding(.top)
-            Spacer()
-            PunchDetection(tagId: tagId)
+//            Text("iTour")
+//                .font(.system(size: 50))
+//                .fontWeight(.heavy)
+//                .bold()
+//                .padding(.top)
+//            Spacer()
+//             PunchDetection(tagId: tagId)
 //            FlipReactionView(tagId: tagId)
 //            RecorderInstructionView(tagId: tagId)
-            // CompassView(tagId: tagId)
+//             CompassView(tagId: tagId)
 //             FlipReactionView(tagId: tagId)
 //            RecorderInstructionView(tagId: tagId)
+            BallBalancingGameView(tagId: tagId)
         }
     }
 }
