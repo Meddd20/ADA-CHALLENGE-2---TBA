@@ -12,7 +12,6 @@ struct FlipReactionView: View {
     @EnvironmentObject var navManager: NavigationManager<Routes>
     
     @State private var gameStarted = false
-    @State private var countdown = 3
     @State private var showGo = false
     @State private var startTime: Date?
     @State private var reactionTime: Double?
@@ -117,10 +116,10 @@ struct FlipReactionView: View {
             
             Spacer()
         }
-        .onChange(of: motion.isPhoneFaceDown) { oldValue, newValue in
+        .onChange(of: motion.isPhoneFaceDown, {
             guard gameStarted else { return }
             
-            if newValue {
+            if motion.isPhoneFaceDown {
                 let time = Date().timeIntervalSince(startTime ?? Date())
                 
                 if let start = startTime {
@@ -139,7 +138,7 @@ struct FlipReactionView: View {
                     }
                 }
             }
-        }
+        })
         .onAppear {
             motion.detectFlipReaction()
         }
