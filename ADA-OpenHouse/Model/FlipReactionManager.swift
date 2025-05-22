@@ -8,7 +8,7 @@
 import CoreMotion
 import Foundation
 
-class FlipReactionManager {
+class FlipReactionManager: ObservableObject {
     private var motionManager = CMMotionManager()
     private var queue = OperationQueue()
     
