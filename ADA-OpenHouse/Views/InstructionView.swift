@@ -34,9 +34,6 @@ struct InstructionView: View {
                 BallBalancingGameView(tagId: tagId)
             }
         }
-        .onAppear {
-            gameViewType = .allCases.randomElement()!
-        }
     }
 }
 
