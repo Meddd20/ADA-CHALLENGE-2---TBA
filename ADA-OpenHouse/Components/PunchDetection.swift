@@ -18,8 +18,16 @@ struct PunchDetection: View {
         VStack(spacing: 24) {
             Spacer(minLength: 60)
 
-            Text("👊 Punch Detector")
-                .font(.system(size: 34, weight: .bold, design: .rounded))
+            VStack (spacing: 8) {
+                Text("👊 Punch Detector")
+                    .font(.system(size: 34, weight: .bold, design: .rounded))
+                
+                Text("Punch as fast as you can while holding your phone — show us your reflex power!")
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: 300)
+            }
             
             VStack(spacing: 12) {
                 Text("Peak Acceleration")
