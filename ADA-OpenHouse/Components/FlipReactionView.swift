@@ -134,7 +134,7 @@ struct FlipReactionView: View {
                 
                 if time <= reactionTreshold {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                        navManager.path.append(.details(tagId: tagId))
+                        navManager.path = .init([.details(tagId: tagId)])
                     }
                 }
             }

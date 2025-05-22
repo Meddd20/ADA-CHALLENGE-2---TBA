@@ -7,26 +7,47 @@
 
 import SwiftUI
 
+enum GameViewType: CaseIterable {
+    case punch, flip, recorder, compass, ballBalancing
+}
+
 struct InstructionView: View {
     var tagId: String
-
+    @State var gameViewType: GameViewType = GameViewType.allCases.randomElement()!
+    
     var body: some View {
         VStack(alignment: .center, spacing: 20) {
-            // Title
-//            Text("iTour")
-//                .font(.system(size: 50))
-//                .fontWeight(.heavy)
-//                .bold()
-//                .padding(.top)
-//            Spacer()
-//             PunchDetection(tagId: tagId)
-//            FlipReactionView(tagId: tagId)
-//            RecorderInstructionView(tagId: tagId)
-//             CompassView(tagId: tagId)
-//             FlipReactionView(tagId: tagId)
-//            RecorderInstructionView(tagId: tagId)
-            BallBalancingGameView(tagId: tagId)
+            switch gameViewType {
+            case .punch:
+                Title()
+                PunchDetection(tagId: tagId)
+            case .flip:
+                Title()
+                FlipReactionView(tagId: tagId)
+            case .recorder:
+                Title()
+                RecorderInstructionView(tagId: tagId)
+            case .compass:
+                Title()
+                CompassView(tagId: tagId)
+            case .ballBalancing:
+                BallBalancingGameView(tagId: tagId)
+            }
         }
+        .onAppear {
+            gameViewType = .allCases.randomElement()!
+        }
+    }
+}
+
+struct Title: View {
+    var body: some View {
+        Text("iTour")
+            .font(.system(size: 50))
+            .fontWeight(.heavy)
+            .bold()
+            .padding(.top)
+        Spacer()
     }
 }
 
