@@ -11,13 +11,14 @@ struct PunchDetection: View {
     @StateObject var punchManager = PunchMotionManager()
     @EnvironmentObject var navManager: NavigationManager<Routes>
     @State private var isDetectingPunch = false
+    @State private var isPresented = false
+    @StateObject private var haptic = HapticModel()
     
     var tagId: String
     
     var body: some View {
         VStack(spacing: 24) {
             Spacer(minLength: 60)
-
             VStack (spacing: 8) {
                 Text("👊 Punch Detector")
                     .font(.system(size: 34, weight: .bold, design: .rounded))
@@ -81,10 +82,16 @@ struct PunchDetection: View {
         }
         .onChange(of: punchManager.didPunchDetected) { oldValue, newValue in
             if newValue {
+                isPresented = true
+                haptic.playHaptic()
+                
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    navManager.path.append(.details(tagId: tagId))
+                    navManager.path = .init([.details(tagId: tagId)])
                 }
             }
+        }
+        .alert(isPresented: $isPresented) {
+            Alert(title: Text("Congratulations!"), message: Text("You got it right!"))
         }
 
     }
