@@ -9,7 +9,8 @@ import SpriteKit
 
 struct BallBalancingGameView: View {
     @State private var gameState: GameState = .playing
-    
+    @EnvironmentObject var navManager: NavigationManager<Routes>
+
     var tagId: String
     
     enum GameState {
@@ -25,6 +26,10 @@ struct BallBalancingGameView: View {
                         scene.scaleMode = .resizeFill
                         scene.onGameOver = { didWin in
                             gameState = didWin ? .won : .lost
+                            
+                            if didWin {
+                                navManager.path = .init([.details(tagId: tagId)])
+                            }
                         }
                         return scene
                     }()
