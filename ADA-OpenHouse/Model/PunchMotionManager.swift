@@ -11,6 +11,7 @@ import Combine
 class PunchMotionManager: ObservableObject {
     private let motionManager = CMMotionManager()
     private let queue = OperationQueue()
+    private let haptic = HapticModel()
     
     @Published var didPunchDetected = false
     @Published var peakAcceleration = 0.0
@@ -33,6 +34,7 @@ class PunchMotionManager: ObservableObject {
                 
                 if magnitude >= 7.0 && !self.didPunchDetected {
                     self.didPunchDetected = true
+                    self.haptic.playHaptic(duration: 0.7)
                 }
             }
         }

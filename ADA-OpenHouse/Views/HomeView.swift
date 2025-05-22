@@ -13,12 +13,13 @@ struct HomeView: View {
     @StateObject private var nfcReader = NFCReader()
     @State private var isWaitOver = true
     @State private var progress = 0.3
+    @State private var isDetectingShake = false
     
     @StateObject private var haptic = HapticModel()
     
     var showSheetBinding: Binding<Bool> {
         Binding(get: {
-            isWaitOver && shakeMotionManager.didShakeDetected
+            isWaitOver && shakeMotionManager.didShakeDetected && isDetectingShake
         }, set: { newValue in
             if !newValue {
                 shakeMotionManager.didShakeDetected = false
@@ -73,15 +74,15 @@ struct HomeView: View {
                 .foregroundStyle(.white)
                 .cornerRadius(20)
             }
-            .onChange(of: shakeMotionManager.didShakeDetected, {
-                if(shakeMotionManager.didShakeDetected) {
-                    haptic.playHaptic(duration: 1)
-                }
-            })
-            
         }
         .padding()
+        .onChange(of: shakeMotionManager.didShakeDetected, {
+            if(shakeMotionManager.didShakeDetected && isDetectingShake) {
+                haptic.playHaptic(duration: 0.7)
+            }
+        })
         .onAppear {
+            isDetectingShake = true
             shakeMotionManager.detectShakeMotion()
             nfcReader.assignOnScan {
                 if(nfcReader.scannedMessage.isEmpty) {
@@ -97,6 +98,7 @@ struct HomeView: View {
             }
         }
         .onDisappear {
+            isDetectingShake = false
             shakeMotionManager.resetShakeDetection()
         }
         .sheet(

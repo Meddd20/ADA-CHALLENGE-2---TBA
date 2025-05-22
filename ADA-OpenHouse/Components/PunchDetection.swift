@@ -73,7 +73,7 @@ struct PunchDetection: View {
         }
         .onChange(of: punchManager.didPunchDetected) { oldValue, newValue in
             if newValue {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     navManager.path.append(.details(tagId: tagId))
                 }
             }
