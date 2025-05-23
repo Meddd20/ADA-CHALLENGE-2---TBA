@@ -77,13 +77,15 @@ struct HomeView: View {
         }
         .padding()
         .onChange(of: shakeMotionManager.didShakeDetected, {
-            if(shakeMotionManager.didShakeDetected && isDetectingShake) {
+            if(shakeMotionManager.didShakeDetected && isDetectingShake && isWaitOver) {
                 haptic.playHaptic(duration: 0.7)
             }
         })
         .onAppear {
+            shakeMotionManager.didShakeDetected = false
             isDetectingShake = true
             shakeMotionManager.detectShakeMotion()
+            
             nfcReader.assignOnScan {
                 if(nfcReader.scannedMessage.isEmpty) {
                     return;
@@ -100,6 +102,7 @@ struct HomeView: View {
         .onDisappear {
             isDetectingShake = false
             shakeMotionManager.resetShakeDetection()
+            shakeMotionManager.stopShakeDetection()
         }
         .sheet(
             isPresented: showSheetBinding,

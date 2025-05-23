@@ -30,11 +30,14 @@ class ShakeMotionManger: ObservableObject {
                     self.didShakeDetected = true
                     print("Shake Detected")
                     
-                    self.motionManager.stopAccelerometerUpdates()
+                    self.stopShakeDetection()
                 }
             }
         }
-        
+    }
+    
+    func stopShakeDetection() {
+        self.motionManager.stopAccelerometerUpdates()
     }
     
     func resetShakeDetection() {
