@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		2F9331172DE1D2A8000BCD73 /* Mentalist in Frameworks */ = {isa = PBXBuildFile; productRef = 2F9331162DE1D2A8000BCD73 /* Mentalist */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		2FBFAB2C2DD43FD70032B6B6 /* ADA-OpenHouse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ADA-OpenHouse.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F9331172DE1D2A8000BCD73 /* Mentalist in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +83,7 @@
 			);
 			name = "ADA-OpenHouse";
 			packageProductDependencies = (
+				2F9331162DE1D2A8000BCD73 /* Mentalist */,
 			);
 			productName = "ADA-OpenHouse";
 			productReference = 2FBFAB2C2DD43FD70032B6B6 /* ADA-OpenHouse.app */;
@@ -107,6 +113,9 @@
 			);
 			mainGroup = 2FBFAB232DD43FD70032B6B6;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				2F9331152DE1D2A8000BCD73 /* XCRemoteSwiftPackageReference "Mentalist" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 2FBFAB2D2DD43FD70032B6B6 /* Products */;
 			projectDirPath = "";
@@ -271,6 +280,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ADA-OpenHouse/Info.plist";
 				INFOPLIST_KEY_NFCReaderUsageDescription = "Scan NFC plzzz";
+				INFOPLIST_KEY_NSCameraUsageDescription = "minjem kamera bentar";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Minjem mic nya dong";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -308,6 +318,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "ADA-OpenHouse/Info.plist";
 				INFOPLIST_KEY_NFCReaderUsageDescription = "Scan NFC plzzz";
+				INFOPLIST_KEY_NSCameraUsageDescription = "minjem kamera bentar";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Minjem mic nya dong";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -352,6 +363,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2F9331152DE1D2A8000BCD73 /* XCRemoteSwiftPackageReference "Mentalist" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/enebin/Mentalist";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2F9331162DE1D2A8000BCD73 /* Mentalist */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2F9331152DE1D2A8000BCD73 /* XCRemoteSwiftPackageReference "Mentalist" */;
+			productName = Mentalist;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 2FBFAB242DD43FD70032B6B6 /* Project object */;
 }
