@@ -19,7 +19,8 @@ struct IndexView: View {
     
     var body: some View {
         NavigationStack(path: $navigationManager.path) {
-            HomeView()
+//            HomeView()
+            TestUI()
                 .onOpenURL { url in
                     let tagId = extractTagId(url)
                     if let tagId = tagId {
