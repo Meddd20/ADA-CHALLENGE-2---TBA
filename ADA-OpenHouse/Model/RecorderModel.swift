@@ -9,7 +9,7 @@ class AudioRecorder: ObservableObject {
     @Published var isTooLoud: Bool = false
     @Published var isRecording: Bool = false
 
-    let loudnessThreshold: Float = -10 // Adjust this threshold as needed
+    let loudnessThreshold: Float = -5 // Adjust this threshold as needed
 
     init() {
         let audioSession = AVAudioSession.sharedInstance()

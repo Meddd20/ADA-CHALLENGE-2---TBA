@@ -101,15 +101,21 @@ class LiveCameraViewController: UIViewController, AVCaptureVideoDataOutputSample
 import SwiftUI
 
 struct CameraViewRepresentable: UIViewControllerRepresentable {
-    @Binding var emotion: String
+    @Binding var emotion: Emotion
+    @Binding var isDone: Bool
 
     func makeUIViewController(context: Context) -> LiveCameraViewController {
         let controller = LiveCameraViewController()
         controller.onEmotionDetected = { detectedEmotion in
-            self.emotion = detectedEmotion.rawValue
+            self.emotion = detectedEmotion
         }
+
         return controller
     }
 
-    func updateUIViewController(_ uiViewController: LiveCameraViewController, context: Context) {}
+    func updateUIViewController(_ uiViewController: LiveCameraViewController, context: Context) {
+        if isDone {
+            uiViewController.session.stopRunning()
+        }
+    }
 }
