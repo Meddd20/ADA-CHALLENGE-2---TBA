@@ -43,9 +43,9 @@ struct FlipReactionView: View {
     }
     
     var body: some View {
-        VStack() {            
+        VStack(spacing: 28) {
             VStack(spacing: 8) {
-                Text("Flip Reaction")
+                Text("🔄 Flip Reaction")
                     .font(.system(size: 32, weight: .bold, design: .rounded))
                 
                 Text("Flip your phone face-down as fast as you can… but only when the screen says GO!")
@@ -75,10 +75,11 @@ struct FlipReactionView: View {
                     }
                 } else if isTooEarly {
                     VStack(spacing: 4) {
-                        Text("❌ Too early!")
-                            .font(.title2)
+                        Text("⛔ Too Early!")
+                            .font(.title2.bold())
                             .foregroundColor(.red)
-                        Text("Wait for \"GO\" before flipping")
+
+                        Text("You moved before the signal. Try again!")
                             .font(.subheadline)
                             .foregroundColor(.gray)
                     }
