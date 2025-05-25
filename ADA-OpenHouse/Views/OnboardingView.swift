@@ -78,13 +78,13 @@ struct OnboardingViewSheet: View {
             
             switch selectedPage {
             case 0:
-                explorePage()
+                ExplorePage()
             case 1:
-                scanNFCPage()
+                ScanNFCPage()
             case 2:
-                finishQuestPage()
+                FinishQuestPage()
             default:
-                explorePage()
+                ExplorePage()
             }
             
             Spacer()
@@ -127,7 +127,7 @@ struct OnboardingViewSheet: View {
     }
 }
 
-struct explorePage: View {
+struct ExplorePage: View {
     var body: some View {
         VStack {
             Text("Explore the area")
@@ -156,7 +156,7 @@ struct explorePage: View {
     }
 }
 
-struct scanNFCPage: View {
+struct ScanNFCPage: View {
     var body: some View {
         VStack {
             Text("Scan NFC tag")
@@ -185,7 +185,7 @@ struct scanNFCPage: View {
     }
 }
 
-struct finishQuestPage: View {
+struct FinishQuestPage: View {
     var body: some View {
         VStack {
             Text("Finish the quest")

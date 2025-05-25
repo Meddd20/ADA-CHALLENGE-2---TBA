@@ -17,7 +17,7 @@ enum Routes: Hashable {
 
 struct IndexView: View {
     @StateObject var navigationManager = NavigationManager<Routes>()
-    @State private var didCompleteOnboarding = false
+    @State private var didCompleteOnboarding = UserDefaults.standard.didCompleteOnboarding
     
     var body: some View {        
         NavigationStack(path: $navigationManager.path) {
