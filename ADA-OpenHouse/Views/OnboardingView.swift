@@ -115,13 +115,13 @@ struct OnboardingViewSheet: View {
             HStack(spacing: 8) {
                 ForEach(0..<3) { index in
                     Circle()
-                        .fill(index == selectedPage ? Color.white : Color.lightGray)
+                        .fill(index == selectedPage ? Color.white : Color.ourLightGray)
                         .frame(width: 8, height: 8)
                 }
             }
             .padding(.horizontal, 12)
             .padding(.vertical, 8)
-            .background(Color.darkGray)
+            .background(Color.ourDarkGray)
             .cornerRadius(20)
         }
     }
