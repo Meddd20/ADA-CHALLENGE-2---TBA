@@ -7,54 +7,6 @@
 import SwiftUI
 import CoreHaptics
 
-class HapticManager {
-    private var engine: CHHapticEngine?
-
-    init() {
-        prepareHaptics()
-    }
-
-    private func prepareHaptics() {
-        guard CHHapticEngine.capabilitiesForHardware().supportsHaptics else { return }
-        do {
-            engine = try CHHapticEngine()
-            try engine?.start()
-        } catch {
-            print("Haptic engine Error: \(error.localizedDescription)")
-        }
-    }
-
-    func playTap() {
-        guard CHHapticEngine.capabilitiesForHardware().supportsHaptics else { return }
-        let intensity = CHHapticEventParameter(parameterID: .hapticIntensity, value: 0.5)
-        let sharpness = CHHapticEventParameter(parameterID: .hapticSharpness, value: 0.5)
-        let event = CHHapticEvent(eventType: .hapticTransient, parameters: [intensity, sharpness], relativeTime: 0)
-
-        do {
-            let pattern = try CHHapticPattern(events: [event], parameters: [])
-            let player = try engine?.makePlayer(with: pattern)
-            try player?.start(atTime: 0)
-        } catch {
-            print("Failed to play haptic: \(error.localizedDescription)")
-        }
-    }
-
-    func playSuccess() {
-        guard CHHapticEngine.capabilitiesForHardware().supportsHaptics else { return }
-        let intensity = CHHapticEventParameter(parameterID: .hapticIntensity, value: 1.0)
-        let sharpness = CHHapticEventParameter(parameterID: .hapticSharpness, value: 0.5)
-        let event = CHHapticEvent(eventType: .hapticContinuous, parameters: [intensity, sharpness], relativeTime: 0, duration: 0.4)
-
-        do {
-            let pattern = try CHHapticPattern(events: [event], parameters: [])
-            let player = try engine?.makePlayer(with: pattern)
-            try player?.start(atTime: 0)
-        } catch {
-            print("Failed to play success haptic: \(error.localizedDescription)")
-        }
-    }
-}
-
 struct WordleView: View {
     var body: some View {
         WordleGameView()
@@ -63,12 +15,10 @@ struct WordleView: View {
 
 struct WordleGameView: View {
     @StateObject private var gameModel: WordleGame
-    private let haptics: HapticManager
+    @StateObject var haptics = HapticModel()
 
     init() {
-        let haptics = HapticManager()
-        _gameModel = StateObject(wrappedValue: WordleGame(haptics: haptics))
-        self.haptics = haptics
+        _gameModel = StateObject(wrappedValue: WordleGame())
     }
 
     var body: some View {
@@ -92,7 +42,6 @@ struct WordleGameView: View {
             // Custom Keyboard
             WordleKeyboard(game: gameModel, haptics: haptics)
                 .frame(maxWidth: 350) // The keyboard itself will still respect this max width
-                .padding(.bottom)
         }
         .frame(maxWidth: 380, maxHeight: .infinity) // This ensures the VStack tries to fill space
         .background(Color(.systemBackground))
@@ -182,7 +131,7 @@ struct LetterCell: View {
 
 struct WordleKeyboard: View {
     @ObservedObject var game: WordleGame
-    let haptics: HapticManager
+    @StateObject var haptics = HapticModel()
     
     let topRow = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"]
     let middleRow = ["A", "S", "D", "F", "G", "H", "J", "K", "L"]
@@ -208,7 +157,7 @@ struct WordleKeyboard: View {
             HStack(spacing: 6) {
                 // Enter button
                 Button(action: {
-                    haptics.playTap()
+                    haptics.playHaptic(duration: 0.1)
                     game.submitGuess()
                 }) {
                     Text("return")
@@ -226,7 +175,7 @@ struct WordleKeyboard: View {
                 
                 // Delete button
                 Button(action: {
-                    haptics.playTap()
+                    haptics.playHaptic(duration: 0.1)
                     game.deleteLetter()
                 }) {
                     Image(systemName: "delete.left")
@@ -245,12 +194,12 @@ struct WordleKeyboard: View {
 struct KeyButton: View {
     let letter: String
     @ObservedObject var game: WordleGame
-    let haptics: HapticManager
+    @StateObject var haptics = HapticModel()
     
     var body: some View {
         HStack {
             Button(action: {
-                haptics.playTap()
+                haptics.playHaptic(duration: 0.1)
                 game.addLetter(letter)
             }) {
                 Text(letter)
@@ -312,7 +261,8 @@ class WordleGame: ObservableObject {
 
     private var targetWord = ""
     private var letterStates: [Character: KeyState] = [:]
-    let haptics: HapticManager
+    @StateObject var haptics = HapticModel()
+
     
     // Curated list of common 5-letter words for better preview performance
     private let wordList = [
@@ -370,8 +320,7 @@ class WordleGame: ObservableObject {
         "WRITE", "WRONG", "WROTE", "YOUNG", "YOUTH"
     ]
     
-    init(haptics: HapticManager) {
-        self.haptics = haptics
+    init() {
         newGame()
         setupHaptics()
     }
@@ -428,7 +377,7 @@ class WordleGame: ObservableObject {
             gameOver = true
             alertMessage = "Congratulations! You found the word!"
             showingAlert = true
-            haptics.playSuccess()
+            haptics.playHaptic()
             // Haptic feedback would go here: notificationFeedback.notificationOccurred(.success)
             return
         }
