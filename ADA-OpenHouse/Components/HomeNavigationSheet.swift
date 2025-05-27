@@ -9,8 +9,7 @@ import SwiftUI
 
 struct BottomSheetView: View {
     @Environment(\.dismiss) private var dismiss
-    @ObservedObject var shakeMotionManager: ShakeMotionManger
-    @StateObject private var viewModel = HomeViewModel()
+    @ObservedObject var shakeMotionManager: ShakeMotionManager
     @State private var progress: Double = 0.0
     @State private var timer: Timer?
     @State private var currentRiddle = ""
@@ -43,7 +42,7 @@ struct BottomSheetView: View {
         .padding()
         .onAppear {
             startTimer()
-            currentRiddle = viewModel.shuffleRiddle()
+            currentRiddle = shuffleRiddle()
         }
         .onDisappear {
             timer?.invalidate()
@@ -67,5 +66,10 @@ struct BottomSheetView: View {
                 dismiss()
             }
         }
+    }
+    
+    func shuffleRiddle() -> String {
+        riddle.shuffle()
+        return riddle.first ?? ""
     }
 }
