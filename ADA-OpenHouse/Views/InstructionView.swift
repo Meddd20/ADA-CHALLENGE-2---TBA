@@ -8,39 +8,41 @@
 import SwiftUI
 
 enum GameViewType: CaseIterable {
-    case punch, flip, recorder, compass, ballBalancing, cameraExpression, slotMachine, rockPaperScissors
+    case punch, flip, recorder, compass, ballBalancing, cameraExpression, rockPaperScissors, wordle, slotMachine
 }
 struct InstructionView: View {
     var tagId: String
     @State var gameViewType: GameViewType = GameViewType.allCases.randomElement() ?? .punch
-    
+
     var body: some View {
         VStack(alignment: .center, spacing: 20) {
-//            switch gameViewType {
-//            case .punch:
-//                Title()
-//                PunchDetection(tagId: tagId)
-//            case .flip:
-//                Title()
-//                FlipReactionView(tagId: tagId)
-//            case .recorder:
-//                Title()
-//                RecorderInstructionView(tagId: tagId)
-//            case .compass:
-//                Title()
-//                CompassView(tagId: tagId)
-//            case .ballBalancing:
-//                BallBalancingGameView(tagId: tagId)
-//            case .cameraExpression:
-//                Title()
-//                CameraExpression(tagId: tagId)
-//            case .slotMachine:
-//                SlotMachineView(tagId: tagId)
-//            case .rockPaperScissors:
-//                Title()
-//                RockPaperScissorsView(tagId: tagId)
-//            }
-            SlotMachineView(tagId: tagId)
+            switch gameViewType {
+            case .punch:
+                Title()
+                PunchDetection(tagId: tagId)
+            case .flip:
+                Title()
+                FlipReactionView(tagId: tagId)
+            case .recorder:
+                Title()
+                RecorderInstructionView(tagId: tagId)
+            case .compass:
+                Title()
+                CompassView(tagId: tagId)
+            case .ballBalancing:
+                BallBalancingGameView(tagId: tagId)
+            case .cameraExpression:
+                Title()
+                CameraExpression(tagId: tagId)
+            case .slotMachine:
+                Title()
+                SlotMachineView(tagId: tagId)
+            case .rockPaperScissors:
+                Title()
+                RockPaperScissorsView(tagId: tagId)
+            case .wordle:
+                WordleGameView(tagId: tagId)
+            }
         }
     }
 }
