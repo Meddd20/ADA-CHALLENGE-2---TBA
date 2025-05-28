@@ -8,7 +8,6 @@
 import SwiftUI
 import SceneKit
 import CoreMotion
-import AVFoundation
 
 struct CubeShaperGameView: View {
     // MARK: - Game State
@@ -29,13 +28,10 @@ struct CubeShaperGameView: View {
     @State private var deviceMotion = CMMotionManager()
     @State private var parallaxOffsetX: CGFloat = 0
     @State private var parallaxOffsetY: CGFloat = 0
-    
-    // Audio player for victory sound
-    @State private var audioPlayer: AVAudioPlayer?
-    
+        
     private let minSize: Float = 0.2
     private let maxSize: Float = 3.0
-    private let winThreshold: Float = 0.94
+    private let winThreshold: Float = 0.90
     private let material = SCNMaterial()
     
     private var averageProgress: Float {
@@ -65,7 +61,7 @@ struct CubeShaperGameView: View {
                             .foregroundColor(.white)
                             .shadow(color: .black.opacity(0.5), radius: 2, x: 0, y: 1)
                         
-                        Text("Get at least 95% accuracy to win!")
+                        Text("Get at least 98% accuracy to win!")
                             .font(.subheadline)
                             .foregroundColor(.white.opacity(0.85))
                             .shadow(color: .black.opacity(0.5), radius: 1, x: 0, y: 1)
@@ -271,8 +267,8 @@ struct CubeShaperGameView: View {
                 
                 // Reduced parallax movement to prevent ANY offset to other elements
                 withAnimation(.easeOut(duration: 0.1)) {
-                    parallaxOffsetX = CGFloat(roll) * 8  // Further reduced
-                    parallaxOffsetY = CGFloat(pitch) * 5 // Further reduced
+                    parallaxOffsetX = CGFloat(roll) * 20  // Further reduced
+                    parallaxOffsetY = CGFloat(pitch) * 15 // Further reduced
                 }
             }
         }
@@ -288,27 +284,8 @@ struct CubeShaperGameView: View {
         winAlertScale = 0.5
         winAlertOpacity = 0.0
     }
-    
-    private func setupAudioPlayer() {
-        guard let soundURL = Bundle.main.url(forResource: "VictorySFX", withExtension: "mp3") else {
-            print("Could not find VictorySFX.mp3 file")
-            return
-        }
         
-        do {
-            audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
-            audioPlayer?.prepareToPlay()
-        } catch {
-            print("Error setting up audio player: \(error)")
-        }
-    }
-    
-    private func playVictorySound() {
-        audioPlayer?.stop()
-        audioPlayer?.currentTime = 0
-        audioPlayer?.play()
-    }
-    
+
     private func startNewGame() {
         currentWidth = 1.0
         currentHeight = 1.0
@@ -333,8 +310,10 @@ struct CubeShaperGameView: View {
         if newWinState && !hasWon {
             hasWon = true
             showWinAlert = true
-            playVictorySound()
             showWinAlertAnimation()
+            do {
+                SoundEffect.shared.playSoundEffect(soundEffect: "victoryff7")
+            }
         }
     }
     
