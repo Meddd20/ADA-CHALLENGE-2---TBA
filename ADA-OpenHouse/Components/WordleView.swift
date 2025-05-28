@@ -51,6 +51,10 @@ struct WordleGameView: View {
                     self.navManager.path = .init([.details(tagId: tagId)])                    
                 }
             }
+            BackgroundMusicPlayer.shared.play(backsound: "spring")
+        }
+        .onDisappear {
+            BackgroundMusicPlayer.shared.stop()
         }
     }
 }
