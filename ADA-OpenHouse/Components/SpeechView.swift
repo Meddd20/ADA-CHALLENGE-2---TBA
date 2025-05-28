@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import AVFAudio
 
 struct SpeechView: View {
     var tagId: String
@@ -20,9 +19,6 @@ struct SpeechView: View {
     @State private var targetText = ""
     @State private var isShowText = false
     @State private var isPresented = false
-    
-
-    let synthesizer = AVSpeechSynthesizer()
 
     var body: some View {
         VStack(spacing: 20) {
