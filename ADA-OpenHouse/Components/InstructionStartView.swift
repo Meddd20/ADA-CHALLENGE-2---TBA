@@ -23,7 +23,8 @@ let instructions: [Instruction] = [
     .init(type: .ballBalancing, icon: "flag.pattern.checkered", text: "Tilt and guide! Help the ghost reach the flag!"),
     .init(type: .cameraExpression, icon: "face.smiling", text: "Make the face! Match the expression to win!"),
     .init(type: .slotMachine, icon: "7.square", text: "Feeling lucky? Spin the slot and hit the jackpot!"),
-    .init(type: .wordle, icon: "text.word.spacing", text: "Guess the word in 6 tries. Every letter counts!")
+    .init(type: .wordle, icon: "text.word.spacing", text: "Guess the word in 6 tries. Every letter counts!"),
+    .init(type: .cubeShaper, icon: "cube", text: "Shape it right! Match the model as closely as you can!")
 ]
 
 
