@@ -17,12 +17,18 @@ class SlotMachineManager: ObservableObject {
     @Published var reelResult = ["🍒", "🍋", "💎"]
     @Published var spinTriggerID = 0
     @Published var jackpotReward: Int? = nil
+    @Published var isSpinning: Bool = false
     @Published var isDoneSpinning = false
     @Published var visibleJackpotReward: Int? = nil
+    @Published var isLeverPulled = false
     
     private var spinCount = 0
     
     func startSpin() {
+        guard !isSpinning else { return }
+        
+        isLeverPulled = false
+        isSpinning = true
         spinCount += 1
         spinTriggerID += 1
         isDoneSpinning = false
@@ -37,14 +43,13 @@ class SlotMachineManager: ObservableObject {
             wasJackpotThisSpin = true
             
             spinCount = 0
-            jackpotIn = Int.random(in: 1...5)
-            isDoneSpinning = true
-            
+            jackpotIn = Int.random(in: 1...5)            
         } else {
             reelResult = (0..<3).map { _ in symbols.randomElement()!.rawValue }
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.5 + 1.2 * 2) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.8 + 1.2 * 2) {
+            self.isSpinning = false
             self.isDoneSpinning = true
             self.visibleJackpotReward = self.jackpotReward
             
