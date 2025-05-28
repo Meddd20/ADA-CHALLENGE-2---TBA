@@ -15,6 +15,7 @@ struct HomeView: View {
     @State private var progress = 0.3
     @State private var isDetectingShake = false
     @State private var manuallyShowSheet: Bool = false
+    @State private var isShowHint: Bool = false
     
     @StateObject private var haptic = HapticModel()
     
@@ -39,50 +40,82 @@ struct HomeView: View {
             Image("bg")
                 .resizable()
                 .scaledToFill()
+            if isShowHint {
                 VStack {
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                            manuallyShowSheet = true
-                        }) {
-                            Circle()
-                                .overlay {
-                                    Image(systemName: "lightbulb.min")
-                                        .foregroundStyle(.white)
-                                }
-                                .frame(width: 40, height: 40)
-                                .foregroundStyle(
-                                    isWaitOver ? .blue : .gray
-                                )
-                        }
-                        .disabled(!isWaitOver)
+                    Spacer()
+                        .frame(height: 100)
+                    HStack(spacing: 10 ) {
+                        Image(systemName: "iphone.radiowaves.left.and.right")
+                            .symbolEffect(.wiggle)
+                            .font(.largeTitle)
+                        Text("Shake your phone to reveal hint")
+                            .multilineTextAlignment(.center)
+                            .fontWidth(.expanded)
+                            .font(.subheadline)
                     }
-                    .padding(.top, 50)
-                    .padding(.trailing, 40)
+                    .padding()
+                    .frame(width: 300)
+                    .background(.white)
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(lineWidth: 0.1)
+                            .shadow(color: .black.opacity(0.5), radius: 2, x: 0, y: 5)
+                    }
                     Spacer()
                 }
+                .transition(.scale.combined(with: .opacity))
+                .id(UUID())
+            }
+            VStack {
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        withAnimation(.easeInOut) {
+                            isShowHint = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                                
+                                isShowHint = false
+                                
+                            }
+                        }
+                    }) {
+                        Circle()
+                            .overlay {
+                                Image(systemName: "lightbulb.min")
+                                    .foregroundStyle(.white)
+                            }
+                            .frame(width: 40, height: 40)
+                            .foregroundStyle(
+                                isShowHint
+                                ? .gray
+                                : .blue
+                            )
+                    }
+                    .disabled(isShowHint)
+                }
+                .padding(.top, 50)
+                .padding(.trailing, 40)
+                Spacer()
+            }
             VStack(spacing: 20) {
-                Text("Have fun and find them!")
-                    .font(.system(size: 35, weight: .heavy))
+                Text("Have fun and explore!")
+                    .font(.largeTitle)
+                    .fontWeight(.heavy)
                     .fontWidth(.expanded)
                     .bold()
                     .multilineTextAlignment(.center)
                 
                 Image(systemName: "figure.walk.motion")
-                    .font(.system(size: 75))
-                    .foregroundStyle(.blue)
-                    .padding(.vertical)
+                    .font(.system(size: 60))
+                    .padding(.vertical, 40)
                 
                 Text("You've discovered 4/10 hidden spots in ADA!")
-                    .font(.system(size: 17, weight: .medium))
+                    .font(.headline)
+                    .fontWeight(.medium)
                     .foregroundStyle(Color.black)
                     .fontWidth(.expanded)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
-                
-                ProgressView(value: progress)
-                    .progressViewStyle(LinearProgressViewStyle(tint: Color.primaryBlue))
-                    .padding(EdgeInsets(top: 15, leading: 40, bottom: 25, trailing: 40))
                 
                 Button(action: {
                     nfcReader.beginScanning()
@@ -94,6 +127,7 @@ struct HomeView: View {
                         .background(Color.primaryBlue)
                         .foregroundStyle(.white)
                         .cornerRadius(20)
+                        .fontWidth(.expanded)
                 }
                 .padding(.top)
             }
