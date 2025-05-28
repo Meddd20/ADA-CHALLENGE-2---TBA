@@ -168,7 +168,7 @@ struct FlipReactionView: View {
             if gameStarted {
                 showGo = true
                 startTime = Date()
-                SoundEffect.shared.playStartSound()
+                SoundEffect.shared.playSoundEffect(soundEffect: "go")
             }
         }
     }

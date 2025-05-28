@@ -12,8 +12,8 @@ class SoundEffect {
     static let shared = SoundEffect()
     private var audioPlayer: AVAudioPlayer?
     
-    func playStartSound() {
-        guard let soundURL = Bundle.main.url(forResource: "go", withExtension: "mp3") else {
+    func playSoundEffect(soundEffect: String) {
+        guard let soundURL = Bundle.main.url(forResource: soundEffect, withExtension: "mp3") else {
             print("Sound file not found")
             return
         }
