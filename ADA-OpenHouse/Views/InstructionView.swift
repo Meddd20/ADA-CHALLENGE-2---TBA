@@ -8,9 +8,8 @@
 import SwiftUI
 
 enum GameViewType: CaseIterable {
-    case punch, flip, recorder, compass, ballBalancing, cameraExpression, rockPaperScissors
+    case punch, flip, recorder, compass, ballBalancing, cameraExpression, slotMachine, rockPaperScissors
 }
-
 struct InstructionView: View {
     var tagId: String
     @State var gameViewType: GameViewType = GameViewType.allCases.randomElement() ?? .punch
@@ -35,6 +34,9 @@ struct InstructionView: View {
             case .cameraExpression:
                 Title()
                 CameraExpression(tagId: tagId)
+            case .slotMachine:
+                Title()
+                SlotMachineView(tagId: tagId)
             case .rockPaperScissors:
                 Title()
                 RockPaperScissorsView(tagId: tagId)

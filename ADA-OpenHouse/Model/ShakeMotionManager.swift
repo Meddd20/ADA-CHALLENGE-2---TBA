@@ -9,7 +9,7 @@ import CoreMotion
 import Combine
 import SwiftUI
 
-class ShakeMotionManger: ObservableObject {
+class ShakeMotionManager: ObservableObject {
     private let motionManager = CMMotionManager()
     private let queue = OperationQueue()
     
