@@ -5,7 +5,6 @@
 //  Created by Wira Wibisana on 27/05/25.
 //
 import SwiftUI
-import CoreHaptics
 
 struct WordleGameView: View {
     @StateObject private var gameModel = WordleGame()
