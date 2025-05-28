@@ -127,6 +127,7 @@ struct HomeView: View {
                         .background(Color.primaryBlue)
                         .foregroundStyle(.white)
                         .cornerRadius(20)
+                        .fontWidth(.expanded)
                 }
                 .padding(.top)
             }
