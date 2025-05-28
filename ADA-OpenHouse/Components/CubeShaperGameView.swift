@@ -10,6 +10,9 @@ import SceneKit
 import CoreMotion
 
 struct CubeShaperGameView: View {
+    var tagId: String
+    @EnvironmentObject var navManager: NavigationManager<Routes>
+    
     // MARK: - Game State
     @State private var currentWidth: Float = 1.0
     @State private var currentHeight: Float = 1.0
@@ -311,9 +314,12 @@ struct CubeShaperGameView: View {
             hasWon = true
             showWinAlert = true
             showWinAlertAnimation()
-            do {
-                SoundEffect.shared.playSoundEffect(soundEffect: "victoryff7")
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                navManager.path = .init([.details(tagId: tagId)])
             }
+            
+            SoundEffect.shared.playSoundEffect(soundEffect: "victoryff7")
         }
     }
     
@@ -516,6 +522,6 @@ struct SceneKitView: UIViewRepresentable {
 // MARK: - Preview
 struct CubeShaperGameView_Previews: PreviewProvider {
     static var previews: some View {
-        CubeShaperGameView()
+        CubeShaperGameView(tagId: "123")
     }
 }
