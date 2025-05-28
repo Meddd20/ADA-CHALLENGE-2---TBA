@@ -38,7 +38,6 @@ struct InstructionView: View {
                     Title()
                     CameraExpression(tagId: tagId)
                 case .slotMachine:
-                    Title()
                     SlotMachineView(tagId: tagId)
                 case .rockPaperScissors:
                     Title()
@@ -46,8 +45,7 @@ struct InstructionView: View {
                 case .wordle:
                     WordleGameView(tagId: tagId)
                 }
-            }
-            else {
+            } else {
                 InstructionStartView(game: $gameViewType, isPlayingGame: $isPlayingGame)
             }
         }
