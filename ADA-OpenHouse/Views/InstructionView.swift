@@ -35,7 +35,8 @@ struct InstructionView: View {
                 Title()
                 CameraExpression(tagId: tagId)
             case .slotMachine:
-                SlotMachineView()
+                Title()
+                SlotMachineView(tagId: tagId)
             case .rockPaperScissors:
                 Title()
                 RockPaperScissorsView(tagId: tagId)

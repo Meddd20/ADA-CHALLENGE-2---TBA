@@ -12,7 +12,10 @@ import SwiftUI
 
 struct SlotMachineView: View {
     @StateObject var manager = SlotMachineManager()
+    @EnvironmentObject var navManager: NavigationManager<Routes>
     let baseSpinTime = 3.5
+    
+    var tagId: String
 
     var body: some View {
         ZStack {
@@ -91,11 +94,16 @@ struct SlotMachineView: View {
             .onDisappear {
                 BackgroundMusicPlayer.shared.stop()
             }
+            .onChange(of: manager.visibleJackpotReward != nil) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    navManager.path = .init([.details(tagId: tagId)])
+                }
+            }
         }
     }
 }
 
 
 #Preview {
-    SlotMachineView()
+    SlotMachineView(tagId: "ajwbfj")
 }
