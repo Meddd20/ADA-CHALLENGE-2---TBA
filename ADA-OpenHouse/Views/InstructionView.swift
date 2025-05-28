@@ -13,8 +13,8 @@ enum GameViewType: CaseIterable {
 
 struct InstructionView: View {
     var tagId: String
-    @State var gameViewType: GameViewType = .wordle
-    
+    @State var gameViewType: GameViewType = GameViewType.allCases.randomElement() ?? .punch
+
     var body: some View {
         VStack(alignment: .center, spacing: 20) {
             switch gameViewType {
