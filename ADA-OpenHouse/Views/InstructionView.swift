@@ -8,13 +8,12 @@
 import SwiftUI
 
 enum GameViewType: CaseIterable {
-    case punch, flip, recorder, compass, ballBalancing, cameraExpression
+    case punch, flip, recorder, compass, ballBalancing, cameraExpression, rockPaperScissors, wordle, slotMachine
 }
-
 struct InstructionView: View {
     var tagId: String
-    @State var gameViewType: GameViewType = GameViewType.allCases.randomElement() ?? .recorder
-    
+    @State var gameViewType: GameViewType = GameViewType.allCases.randomElement() ?? .punch
+
     var body: some View {
         VStack(alignment: .center, spacing: 20) {
             switch gameViewType {
@@ -35,6 +34,14 @@ struct InstructionView: View {
             case .cameraExpression:
                 Title()
                 CameraExpression(tagId: tagId)
+            case .slotMachine:
+                Title()
+                SlotMachineView(tagId: tagId)
+            case .rockPaperScissors:
+                Title()
+                RockPaperScissorsView(tagId: tagId)
+            case .wordle:
+                WordleGameView(tagId: tagId)
             }
         }
     }

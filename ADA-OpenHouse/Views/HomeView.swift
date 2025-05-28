@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @EnvironmentObject var navManager: NavigationManager<Routes>
-    @StateObject private var shakeMotionManager = ShakeMotionManger()
+    @StateObject private var shakeMotionManager = ShakeMotionManager()
     @StateObject private var nfcReader = NFCReader()
     @State private var isWaitOver = true
     @State private var progress = 0.3
