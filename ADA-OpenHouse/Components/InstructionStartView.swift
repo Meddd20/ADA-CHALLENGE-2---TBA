@@ -25,7 +25,8 @@ let instructions: [Instruction] = [
     .init(type: .slotMachine, icon: "7.square", text: "Feeling lucky? Spin the slot and hit the jackpot!"),
     .init(type: .wordle, icon: "text.word.spacing", text: "Guess the word in 6 tries. Every letter counts!"),
     .init(type: .cubeShaper, icon: "cube", text: "Shape it right! Match the model as closely as you can!"),
-    .init(type: .speechRecognition, icon: "person.line.dotted.person.fill", text: "Listen carefully. Can you repeat it perfectly?")
+    .init(type: .speechRecognition, icon: "person.line.dotted.person.fill", text: "Listen carefully. Can you repeat it perfectly?"),
+    .init(type: .anomaly, icon: "flowchart", text: "Spot the odd one out! Scan the data and tap the anomaly!")
 ]
 
 
