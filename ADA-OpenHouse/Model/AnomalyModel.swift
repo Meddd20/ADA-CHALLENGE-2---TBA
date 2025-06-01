@@ -44,10 +44,10 @@ class AnomalyModel: ObservableObject {
             fatalError("Failed to load CSV file.")
         }
         
-        let randomIndex = Int.random(in: 0..<100)
+        let selectedRows = df.rows.shuffled().prefix(100)
+        let randomIndex = Int.random(in: 0..<selectedRows.count)
         anomalyIndex = randomIndex
         rows = []
-        let selectedRows = df.rows.shuffled().prefix(100)
         var currentIndex = 0
         
         selectedRows.forEach { row in
