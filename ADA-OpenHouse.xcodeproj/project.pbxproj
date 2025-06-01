@@ -283,6 +283,7 @@
 				INFOPLIST_KEY_NFCReaderUsageDescription = "Scan NFC plzzz";
 				INFOPLIST_KEY_NSCameraUsageDescription = "minjem kamera bentar";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Minjem mic nya dong";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Minjem speech boleee?";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -322,6 +323,7 @@
 				INFOPLIST_KEY_NFCReaderUsageDescription = "Scan NFC plzzz";
 				INFOPLIST_KEY_NSCameraUsageDescription = "minjem kamera bentar";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Minjem mic nya dong";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Minjem speech boleee?";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

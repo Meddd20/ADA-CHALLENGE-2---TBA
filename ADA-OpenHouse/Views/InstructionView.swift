@@ -8,41 +8,51 @@
 import SwiftUI
 
 enum GameViewType: CaseIterable {
-    case punch, flip, recorder, compass, ballBalancing, cameraExpression, rockPaperScissors, wordle, slotMachine, catMeowMimic
+    case punch, flip, recorder, compass, ballBalancing, cameraExpression, rockPaperScissors, wordle, slotMachine, cubeShaper, speechRecognition, catMeowMimic
 }
+
 struct InstructionView: View {
     var tagId: String
     @State var gameViewType: GameViewType = GameViewType.allCases.randomElement() ?? .punch
-
+    @State var isPlayingGame: Bool = false
+    
     var body: some View {
         VStack(alignment: .center, spacing: 20) {
-            switch gameViewType {
-            case .punch:
-                Title()
-                PunchDetection(tagId: tagId)
-            case .flip:
-                Title()
-                FlipReactionView(tagId: tagId)
-            case .recorder:
-                Title()
-                RecorderInstructionView(tagId: tagId)
-            case .compass:
-                Title()
-                CompassView(tagId: tagId)
-            case .ballBalancing:
-                BallBalancingGameView(tagId: tagId)
-            case .cameraExpression:
-                Title()
-                CameraExpression(tagId: tagId)
-            case .slotMachine:
-                SlotMachineView(tagId: tagId)
-            case .rockPaperScissors:
-                Title()
-                RockPaperScissorsView(tagId: tagId)
-            case .wordle:
-                WordleGameView(tagId: tagId)
-            case .catMeowMimic:
-                CatMeowMimicView(passedTagId: tagId)
+            if isPlayingGame {
+                switch gameViewType {
+                case .punch:
+                    Title()
+                    PunchDetection(tagId: tagId)
+                case .flip:
+                    Title()
+                    FlipReactionView(tagId: tagId)
+                case .recorder:
+                    Title()
+                    RecorderInstructionView(tagId: tagId)
+                case .compass:
+                    Title()
+                    CompassView(tagId: tagId)
+                case .ballBalancing:
+                    BallBalancingGameView(tagId: tagId)
+                case .cameraExpression:
+                    Title()
+                    CameraExpression(tagId: tagId)
+                case .slotMachine:
+                    SlotMachineView(tagId: tagId)
+                case .rockPaperScissors:
+                    Title()
+                    RockPaperScissorsView(tagId: tagId)
+                case .wordle:
+                    WordleGameView(tagId: tagId)
+                case .cubeShaper:
+                    CubeShaperGameView(tagId: tagId)
+                case .speechRecognition:
+                    SpeechView(tagId: tagId)
+                case .catMeowMimic:
+                    CatMeowMimicView(passedTagId: tagId)
+                }
+            } else {
+                InstructionStartView(game: $gameViewType, isPlayingGame: $isPlayingGame)
             }
         }
     }
