@@ -12,8 +12,10 @@ class SoundEffect {
     static let shared = SoundEffect()
     private var audioPlayer: AVAudioPlayer?
     
-    func playSoundEffect(soundEffect: String) {
-        guard let soundURL = Bundle.main.url(forResource: soundEffect, withExtension: "mp3") else {
+    func playSoundEffect(soundEffect: String, fileExtension: String? = "mp3") {
+        AudioSessionManager.configurePlaybackSession()
+        
+        guard let soundURL = Bundle.main.url(forResource: soundEffect, withExtension: fileExtension) else {
             print("Sound file not found")
             return
         }
@@ -24,5 +26,9 @@ class SoundEffect {
         } catch {
             print("Failed to play sound: \(error.localizedDescription)")
         }
+    }
+    
+    func stopSoundEffect() {
+        audioPlayer?.stop()
     }
 }
