@@ -48,8 +48,9 @@ class AnomalyModel: ObservableObject {
         anomalyIndex = randomIndex
         rows = []
         let selectedRows = df.rows.shuffled().prefix(100)
+        var currentIndex = 0
         
-        for (index, row) in selectedRows.enumerated() {
+        selectedRows.forEach { row in
             if
                 let name = row["Name"] as? String,
                 let platform = row["Platform"] as? String,
@@ -58,7 +59,7 @@ class AnomalyModel: ObservableObject {
                 let publisher = row["Publisher"] as? String,
                 var sales = row["Global_Sales"] as? Double
             {
-                if index == randomIndex {
+                if currentIndex == randomIndex {
                     sales = 9999999999.99
                 }
                 
@@ -70,6 +71,7 @@ class AnomalyModel: ObservableObject {
                     publisher: publisher,
                     sales: sales
                 ))
+                currentIndex += 1
             }
         }
     }

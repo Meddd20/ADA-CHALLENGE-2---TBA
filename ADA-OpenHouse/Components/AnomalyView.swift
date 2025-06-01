@@ -82,7 +82,6 @@ struct AnomalyView: View {
                 Alert(title: Text(alertTitle), message: Text(alertMessage))
             }
             .padding(.horizontal)
-            .navigationTitle("Find the Anomaly")
         }
     }
     
