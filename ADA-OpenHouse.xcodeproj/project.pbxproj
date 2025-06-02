@@ -279,6 +279,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ADA-OpenHouse/Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NFCReaderUsageDescription = "Scan NFC plzzz";
 				INFOPLIST_KEY_NSCameraUsageDescription = "minjem kamera bentar";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Minjem mic nya dong";
@@ -318,6 +319,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "ADA-OpenHouse/Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NFCReaderUsageDescription = "Scan NFC plzzz";
 				INFOPLIST_KEY_NSCameraUsageDescription = "minjem kamera bentar";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Minjem mic nya dong";

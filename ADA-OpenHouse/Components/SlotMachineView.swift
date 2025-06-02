@@ -93,6 +93,7 @@ struct SlotMachineView: View {
             }
             .onDisappear {
                 BackgroundMusicPlayer.shared.stop()
+                SoundEffect.shared.stopSoundEffect()
             }
             .onChange(of: manager.visibleJackpotReward != nil) {
                 onComplete()

@@ -67,6 +67,10 @@ struct InstructionView: View {
                 case .anomaly:
                     Title()
                     AnomalyView(tagId: tagId, onComplete: onComplete)
+                case .catMeowMimic:
+                    CatMeowMimicView(passedTagId: tagId)
+                case .coinFlip:
+                    CoinFlipView(tagId: tagId)
                 }
             } else {
                 InstructionStartView(game: $gameViewType, isPlayingGame: $isPlayingGame)
