@@ -20,7 +20,7 @@ class NFCReader: NSObject, ObservableObject, NFCNDEFReaderSessionDelegate {
         }
         
         session = NFCNDEFReaderSession(delegate: self, queue: nil, invalidateAfterFirstRead: true)
-        session?.alertMessage = "Kalem anying scan dulu"
+        session?.alertMessage = "Move your phone near the sticker"
         session?.begin()
     }
     

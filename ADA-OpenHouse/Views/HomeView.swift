@@ -124,7 +124,7 @@ struct HomeView: View {
                 .padding(.horizontal)
                 
                 if completedTags.count >= 10 {
-                    Text(completedGames.count < 10 ?
+                    Text(completedGames.count < 15 ?
                          "You've completed \(completedGames.count)/15 minigames"
                          : "You've completed all of our games. Congratulations!"
                     )
