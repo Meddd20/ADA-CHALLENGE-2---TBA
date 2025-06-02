@@ -12,7 +12,7 @@ class BackgroundMusicPlayer {
     var player: AVAudioPlayer?
     
     func play(backsound: String) {
-        prepareAudioSession()
+        AudioSessionManager.configurePlaybackSession()
         
         guard let url = Bundle.main.url(forResource: backsound, withExtension: "mp3") else { return }
         
@@ -33,14 +33,7 @@ class BackgroundMusicPlayer {
         player = nil
     }
     
-    func prepareAudioSession() {
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
-            try AVAudioSession.sharedInstance().setActive(true)
-        } catch {
-            print("Audio session setup failed: \(error)")
-        }
-    }
+    
     
     
 }

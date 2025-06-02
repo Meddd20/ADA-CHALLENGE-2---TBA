@@ -7,9 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
-
 struct SlotMachineView: View {
     @StateObject var manager = SlotMachineManager()
     @EnvironmentObject var navManager: NavigationManager<Routes>
@@ -68,6 +65,7 @@ struct SlotMachineView: View {
                 .padding(.horizontal)
 
                 Button(action: {
+                    if manager.isLeverPulled { return }
                     SoundEffect.shared.playSoundEffect(soundEffect: "start-machine")
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                         manager.startSpin()
@@ -86,6 +84,7 @@ struct SlotMachineView: View {
                         .shadow(color: .black.opacity(0.4), radius: 8, x: 0, y: 4)
                 }
                 .padding(.top)
+                .disabled(manager.isSpinning)
             }
             .padding()
             .onAppear {
@@ -93,6 +92,7 @@ struct SlotMachineView: View {
             }
             .onDisappear {
                 BackgroundMusicPlayer.shared.stop()
+                SoundEffect.shared.stopSoundEffect()
             }
             .onChange(of: manager.visibleJackpotReward != nil) {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {

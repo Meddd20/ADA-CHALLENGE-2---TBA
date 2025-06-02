@@ -60,8 +60,8 @@ struct OnboardingView: View {
             }
         }) {
             OnboardingViewSheet (shouldNavigate: $navigateHome, showSheet: $bottomSheetUp)
-            .environmentObject(navManager)
-            .presentationDetents([.height(800)])
+                .environmentObject(navManager)
+                .presentationDetents([.height(800)])
         }
     }
 }
@@ -100,13 +100,17 @@ struct OnboardingViewSheet: View {
                     }
                 }
             }) {
-                Text("Next")
-                    .font(.system(size: 18, weight: .bold))
-                    .fontWidth(.expanded)
-                    .foregroundColor(.white)
-                    .frame(width: 246, height: 51)
-                    .background(.primaryBlue)
-                    .cornerRadius(20)
+                Text(
+                    selectedPage == 2
+                    ? "Start Now"
+                    : "Next"
+                )
+                .font(.system(size: 18, weight: .bold))
+                .fontWidth(.expanded)
+                .foregroundColor(.white)
+                .frame(width: 246, height: 51)
+                .background(.primaryBlue)
+                .cornerRadius(20)
             }
             
             Spacer()
@@ -216,5 +220,5 @@ struct FinishQuestPage: View {
 
 #Preview {
     OnboardingView() {}
-    .environmentObject(NavigationManager<Routes>())
+        .environmentObject(NavigationManager<Routes>())
 }
