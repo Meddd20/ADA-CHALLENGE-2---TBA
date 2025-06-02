@@ -15,6 +15,7 @@ struct CatMeowMimicView: View {
 
     @State private var isListening = false
     var tagId: String
+    var onComplete: (() -> Void)
 
     init(passedTagId: String) {
         let mic = AudioStreamManager()
@@ -117,9 +118,7 @@ struct CatMeowMimicView: View {
             predictionManager.analyze(buffer: buffer, at: time)
         }
         .onChange(of: predictionManager.isConfirmCat) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                navManager.path = .init([.details(tagId: tagId)])
-            }
+            onComplete()
             SoundEffect.shared.playSoundEffect(soundEffect: "sweet-meow", fileExtension: "wav")
         }
         .onDisappear {

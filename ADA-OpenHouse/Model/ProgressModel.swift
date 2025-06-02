@@ -35,7 +35,7 @@ class TagViewState {
 enum GameViewType: String, CaseIterable, Codable, Identifiable {
     var id: String { rawValue }
     
-    case punch, flip, recorder, compass, ballBalancing, cameraExpression, rockPaperScissors, wordle, slotMachine, cubeShaper, speechRecognition, anomaly
+    case punch, flip, recorder, compass, ballBalancing, cameraExpression, rockPaperScissors, wordle, slotMachine, cubeShaper, speechRecognition, anomaly, catMeowMimic, coinFlip
 }
 
 func upsertGameViewState(type: GameViewType, isDone: Bool, context: ModelContext) {
