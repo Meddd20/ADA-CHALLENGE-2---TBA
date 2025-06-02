@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum GameViewType: CaseIterable {
-    case punch, flip, recorder, compass, ballBalancing, cameraExpression, rockPaperScissors, wordle, slotMachine
+    case punch, flip, recorder, compass, ballBalancing, cameraExpression, rockPaperScissors, wordle, slotMachine, coinFlip
 }
 struct InstructionView: View {
     var tagId: String
@@ -42,6 +42,8 @@ struct InstructionView: View {
                 RockPaperScissorsView(tagId: tagId)
             case .wordle:
                 WordleGameView(tagId: tagId)
+            case .coinFlip:
+                CoinFlipView(tagId: tagId)
             }
         }
     }

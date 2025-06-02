@@ -6,8 +6,12 @@
 ////
 //
 import SwiftUI
+
 struct CoinFlipView: View {
     @StateObject private var model = CoinFlipModel()
+    @EnvironmentObject var navManager: NavigationManager<Routes>
+    
+    var tagId: String
     
     var body: some View {
         GeometryReader { geometry in
@@ -27,6 +31,13 @@ struct CoinFlipView: View {
                     // Controls Section
                     controlsSection
                         .frame(height: geometry.size.height * 0.35)
+                }
+            }
+            .onChange(of: model.coinResult) {
+                if model.coinResult == model.userGuess {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        navManager.path = .init([.details(tagId: tagId)])
+                    }
                 }
             }
         }
@@ -271,34 +282,36 @@ struct CoinFlipView: View {
                 }
             }
             
-            // Action Button
-            Button(action: {
-                model.resetGame()
-            }) {
-                HStack(spacing: 10) {
-                    Image(systemName: model.isWinner ? "arrow.clockwise" : "arrow.counterclockwise")
-                        .font(.title3)
-                    
-                    Text(model.isWinner ? "PLAY AGAIN" : "TRY AGAIN")
-                        .font(.system(size: 18, weight: .bold, design: .rounded))
-                }
-                .foregroundColor(.white)
-                .padding(.horizontal, 30)
-                .padding(.vertical, 15)
-                .background(
-                    RoundedRectangle(cornerRadius: 25)
-                        .fill(
-                            LinearGradient(
-                                colors: model.isWinner ? [.green, .mint] : [.orange, .red],
-                                startPoint: .leading,
-                                endPoint: .trailing
+            if !model.isWinner {
+                // Action Button
+                Button(action: {
+                    model.resetGame()
+                }) {
+                    HStack(spacing: 10) {
+                        Image(systemName: model.isWinner ? "arrow.clockwise" : "arrow.counterclockwise")
+                            .font(.title3)
+                        
+                        Text(model.isWinner ? "PLAY AGAIN" : "TRY AGAIN")
+                            .font(.system(size: 18, weight: .bold, design: .rounded))
+                    }
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 30)
+                    .padding(.vertical, 15)
+                    .background(
+                        RoundedRectangle(cornerRadius: 25)
+                            .fill(
+                                LinearGradient(
+                                    colors: model.isWinner ? [.green, .mint] : [.orange, .red],
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
                             )
-                        )
-                        .shadow(color: .black.opacity(0.2), radius: 8, x: 0, y: 4)
-                )
+                            .shadow(color: .black.opacity(0.2), radius: 8, x: 0, y: 4)
+                    )
+                }
+                .scaleEffect(0.95)
+                .animation(.easeInOut(duration: 0.1), value: model.isWinner)
             }
-            .scaleEffect(0.95)
-            .animation(.easeInOut(duration: 0.1), value: model.isWinner)
         }
     }
 }
@@ -325,5 +338,5 @@ struct AnimatedBackgroundView: View {
 }
 
 #Preview {
-    CoinFlipView()
+    CoinFlipView(tagId: "vfuwjk")
 }

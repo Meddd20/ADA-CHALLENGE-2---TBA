@@ -77,5 +77,9 @@ class CoinFlipModel: ObservableObject {
         }
         
         isWinner = userGuess == coinResult
+        
+        if !isWinner {
+            resetGame()
+        }
     }
 }
