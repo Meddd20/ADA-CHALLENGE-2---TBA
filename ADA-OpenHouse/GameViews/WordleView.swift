@@ -10,7 +10,8 @@ struct WordleGameView: View {
     @StateObject private var gameModel = WordleGame()
     @StateObject var haptics = HapticModel()
     var tagId: String
-    
+    var onComplete: (() -> Void)
+
     @EnvironmentObject var navManager: NavigationManager<Routes>
     
     var body: some View {
@@ -47,9 +48,7 @@ struct WordleGameView: View {
         .onAppear {
             gameModel.newGame()
             gameModel.onComplete = {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    self.navManager.path = .init([.details(tagId: tagId)])                    
-                }
+                onComplete()
             }
             BackgroundMusicPlayer.shared.play(backsound: "spring")
         }
@@ -253,9 +252,4 @@ enum KeyState {
     case correct
     case wrongPosition
     case incorrect
-}
-
-// MARK: - Preview
-#Preview {
-    WordleGameView(tagId: "123")
 }

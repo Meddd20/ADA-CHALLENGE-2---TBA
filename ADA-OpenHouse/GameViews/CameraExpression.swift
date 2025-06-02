@@ -13,6 +13,8 @@ import Mentalist
 let possibleEmotions: [Emotion] = [.happy, .sad, .angry, .fear]
 struct CameraExpression: View {
     var tagId: String
+    var onComplete: (() -> Void)
+
     var randomEmotion = possibleEmotions.randomElement() ?? .neutral
     
     @State private var isPresented: Bool = false
@@ -33,8 +35,7 @@ struct CameraExpression: View {
                     isDone = true
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                        haptic.playHaptic()
-                        isPresented = true
+                        onComplete()
                     }
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
@@ -55,8 +56,4 @@ struct CameraExpression: View {
             .cornerRadius(10)
             .padding(.top, 50)
     }
-}
-
-#Preview {
-    CameraExpression(tagId: "123")
 }

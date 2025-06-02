@@ -15,14 +15,16 @@ struct CatMeowMimicView: View {
 
     @State private var isListening = false
     var tagId: String
+    var onComplete: (() -> Void)
 
-    init(passedTagId: String) {
+    init(tagId: String, onComplete: @escaping () -> Void) {
         let mic = AudioStreamManager()
         let predictor = SoundPredictionManager()
         predictor.configure(with: mic.audioFormat)
         _micManager = StateObject(wrappedValue: mic)
         _predictionManager = StateObject(wrappedValue: predictor)
-        self.tagId = passedTagId
+        self.tagId = tagId
+        self.onComplete = onComplete
     }
 
     var body: some View {
@@ -117,9 +119,7 @@ struct CatMeowMimicView: View {
             predictionManager.analyze(buffer: buffer, at: time)
         }
         .onChange(of: predictionManager.isConfirmCat) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                navManager.path = .init([.details(tagId: tagId)])
-            }
+            onComplete()
             SoundEffect.shared.playSoundEffect(soundEffect: "sweet-meow", fileExtension: "wav")
         }
         .onDisappear {
@@ -129,6 +129,3 @@ struct CatMeowMimicView: View {
     }
 }
 
-#Preview {
-    CatMeowMimicView(passedTagId: "hvwufbwi")
-}

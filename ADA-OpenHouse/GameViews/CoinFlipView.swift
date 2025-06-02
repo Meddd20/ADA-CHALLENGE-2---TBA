@@ -12,6 +12,7 @@ struct CoinFlipView: View {
     @EnvironmentObject var navManager: NavigationManager<Routes>
     
     var tagId: String
+    var onComplete: (() -> Void)
     
     var body: some View {
         GeometryReader { geometry in
@@ -35,9 +36,7 @@ struct CoinFlipView: View {
             }
             .onChange(of: model.coinResult) {
                 if model.coinResult == model.userGuess {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                        navManager.path = .init([.details(tagId: tagId)])
-                    }
+                    onComplete()
                 }
             }
         }
@@ -243,8 +242,8 @@ struct CoinFlipView: View {
                         .scaleEffect(model.gameState == .flipping ? 1.5 : 1.0)
                         .animation(
                             .easeInOut(duration: 0.6)
-                                .repeatForever()
-                                .delay(Double(index) * 0.2),
+                            .repeatForever()
+                            .delay(Double(index) * 0.2),
                             value: model.gameState
                         )
                 }
@@ -323,7 +322,7 @@ struct AnimatedBackgroundView: View {
     var body: some View {
         LinearGradient(
             colors: animateGradient ?
-                [Color.purple, Color.blue, Color.indigo, Color.purple] :
+            [Color.purple, Color.blue, Color.indigo, Color.purple] :
                 [Color.indigo, Color.purple, Color.blue, Color.indigo],
             startPoint: animateGradient ? .topLeading : .bottomLeading,
             endPoint: animateGradient ? .bottomTrailing : .topTrailing
@@ -335,8 +334,4 @@ struct AnimatedBackgroundView: View {
             }
         }
     }
-}
-
-#Preview {
-    CoinFlipView(tagId: "vfuwjk")
 }
