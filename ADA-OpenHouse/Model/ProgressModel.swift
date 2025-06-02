@@ -54,7 +54,11 @@ func upsertGameViewState(type: GameViewType, isDone: Bool, context: ModelContext
     }
     
     // Save (optional depending on when/how your app saves)
-    try? context.save()
+    do {
+        try context.save()
+    } catch {
+        print("Failed to save context: \(error)")
+    }
 }
 
 func upsertTagViewState(tag: String, isDone: Bool, context: ModelContext) {
