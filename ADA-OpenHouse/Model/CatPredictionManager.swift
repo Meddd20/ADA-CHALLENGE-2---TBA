@@ -62,7 +62,7 @@ class SoundPredictionManager: NSObject, ObservableObject, SNResultsObserving {
                 }
 
                 let duration = Date().timeIntervalSince(self.catDetectedStartTime!)
-                if duration >= 1.0 && !self.isConfirmCat {
+                if duration >= 0.8 && !self.isConfirmCat {
                     self.predictionLabel = "cat"
                     self.predictionConfidence = top.confidence
                     self.isConfirmCat = true
