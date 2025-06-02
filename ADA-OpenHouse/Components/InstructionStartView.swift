@@ -34,6 +34,9 @@ struct InstructionStartView: View {
     @Binding var game: GameViewType
     @State private var instruction = instructions[0]
     @Binding var isPlayingGame: Bool
+    @State private var isRandomizing = false
+    @State private var randomizeTimer: Timer?
+    @State private var currentRandomIndex = 0
     
     var body: some View {
         ZStack {
@@ -44,19 +47,19 @@ struct InstructionStartView: View {
                 HStack {
                     Spacer()
                     Button(action: {
-                        withAnimation(.easeInOut) {
-                            let randomizedGame = .allCases.randomElement() ?? GameViewType.cameraExpression
-                            game = randomizedGame
-                            instruction = instructions.first(where: { $0.type == randomizedGame }) ?? instructions[0]
-                        }
+                        SoundEffect.shared.playSoundEffect(soundEffect: "instruction-randomizer")
+                        startRandomizing()
                     }) {
                         Circle()
+                            .fill(isRandomizing ? Color.gray : .blue)
                             .overlay {
                                 Image(systemName: "arrow.trianglehead.2.clockwise")
                                     .foregroundStyle(.white)
+                                    .rotationEffect(.degrees(isRandomizing ? 360 : 0))
                             }
                             .frame(width: 40, height: 40)
                     }
+                    .disabled(isRandomizing)
                 }
                 .padding(.top, 50)
                 .padding(.trailing, 50)
@@ -72,11 +75,13 @@ struct InstructionStartView: View {
                     Image(systemName: instruction.icon)
                         .font(.system(size: 40))
                         .padding(.vertical, 30)
+                        .contentTransition(.symbolEffect(.replace))
                     Text(instruction.text)
                         .font(.title2)
                         .fontWeight(.heavy)
                         .fontWidth(.expanded)
                         .multilineTextAlignment(.center)
+                        .contentTransition(.opacity)
                 }
                 .transition(.opacity)
                 .id(game)
@@ -87,11 +92,12 @@ struct InstructionStartView: View {
                         .font(.system(size: 20, weight: .bold))
                         .frame(height: 51)
                         .frame(maxWidth: .infinity)
-                        .background(Color.primaryBlue)
+                        .background(isRandomizing ? Color.gray : Color.primaryBlue)
                         .foregroundStyle(.white)
                         .cornerRadius(20)
                         .fontWidth(.expanded)
                 }
+                .disabled(isRandomizing)
                 .padding(.top)
             }
             .background(.white)
@@ -107,8 +113,33 @@ struct InstructionStartView: View {
             .onAppear {
                 instruction = instructions.first(where: { $0.type == game }) ?? instructions[0]
             }
-            
-            
         }
     }
+
+    // Randomizing logic
+    private func startRandomizing() {
+        isRandomizing = true
+        randomizeTimer?.invalidate()
+        currentRandomIndex = 0
+        
+        randomizeTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
+            currentRandomIndex = Int.random(in: 0..<instructions.count)
+            instruction = instructions[currentRandomIndex]
+        }
+
+        // Stop randomizing after 1.2 seconds
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.2) {
+            randomizeTimer?.invalidate()
+            randomizeTimer = nil
+            isRandomizing = false
+        }
+    }
+}
+
+// MARK: - Preview
+#Preview {
+    InstructionStartView(
+        game: .constant(.cameraExpression),
+        isPlayingGame: .constant(false)
+    )
 }
