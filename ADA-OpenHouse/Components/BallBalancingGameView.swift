@@ -12,7 +12,8 @@ struct BallBalancingGameView: View {
     @EnvironmentObject var navManager: NavigationManager<Routes>
     @StateObject private var haptic = HapticModel()
     var tagId: String
-    
+    var onComplete: (() -> Void)
+
     enum GameState {
         case playing, won, lost
     }
@@ -28,10 +29,7 @@ struct BallBalancingGameView: View {
                             gameState = didWin ? .won : .lost
                             
                             if didWin {
-                                haptic.playHaptic()
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                                    navManager.path = .init([.details(tagId: tagId)])
-                                }
+                               onComplete()
                             }
                         }
                         return scene
@@ -55,8 +53,3 @@ struct BallBalancingGameView: View {
         }
     }
 }
-struct BallBalancingGameView_Previews: PreviewProvider {
-        static var previews: some View {
-            BallBalancingGameView(tagId: "agweudf")
-        }
-    }

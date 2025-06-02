@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct HomeView: View {
     @EnvironmentObject var navManager: NavigationManager<Routes>
@@ -16,7 +17,8 @@ struct HomeView: View {
     @State private var isDetectingShake = false
     @State private var manuallyShowSheet: Bool = false
     @State private var isShowHint: Bool = false
-    
+    @Query(filter: #Predicate<TagViewState> { $0.isDone == true }) var completedTags: [TagViewState]
+    @Query(filter: #Predicate<GameViewState> { $0.isDone == true }) var completedGames: [GameViewState]
     @StateObject private var haptic = HapticModel()
     
     var showSheetBinding: Binding<Bool> {
@@ -109,13 +111,30 @@ struct HomeView: View {
                     .font(.system(size: 60))
                     .padding(.vertical, 40)
                 
-                Text("You've discovered 4/10 hidden spots in ADA!")
+                
+                Text(completedTags.count < 10 ?
+                     "You've discovered \(completedTags.count)/10 hidden spots in ADA!"
+                     : "You've discovered all hidden spots in ADA!"
+                )
+                .font(.headline)
+                .fontWeight(.medium)
+                .foregroundStyle(Color.black)
+                .fontWidth(.expanded)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
+                
+                if completedTags.count >= 10 {
+                    Text(completedGames.count < 10 ?
+                         "You've completed \(completedGames.count)/15 minigames"
+                         : "You've completed all of our games. Congratulations!"
+                    )
                     .font(.headline)
                     .fontWeight(.medium)
                     .foregroundStyle(Color.black)
                     .fontWidth(.expanded)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
+                }
                 
                 Button(action: {
                     nfcReader.beginScanning()

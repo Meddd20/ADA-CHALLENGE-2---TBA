@@ -18,8 +18,9 @@ struct FlipReactionView: View {
     @State private var reactionTime: Double?
     @State private var isTooEarly = false
     @State private var isPresented = false
-    
+
     var tagId: String
+    var onComplete: (() -> Void)
     let reactionDelay = Double.random(in: 3...6)
     let reactionTreshold = 0.5
     
@@ -136,11 +137,7 @@ struct FlipReactionView: View {
                 }
                 
                 if time <= reactionTreshold {
-                    haptic.playHaptic()
-                    isPresented = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                        navManager.path = .init([.details(tagId: tagId)])
-                    }
+                   onComplete()
                 }
             }
         })
@@ -172,8 +169,4 @@ struct FlipReactionView: View {
             }
         }
     }
-}
-
-#Preview {
-    FlipReactionView(tagId: "abcdhb")
 }

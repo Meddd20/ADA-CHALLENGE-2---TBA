@@ -9,6 +9,8 @@ import SwiftUI
 
 struct SpeechView: View {
     var tagId: String
+    var onComplete: (() -> Void)
+
     var sentenceGenerator = SentenceGenerator()
     @StateObject private var speechRecognizer = SpeechRecognizer()
     @StateObject private var tts = TextToSpeechModel()
@@ -103,19 +105,11 @@ struct SpeechView: View {
         .onChange(of: speechRecognizer.transcribedText, {
             if areSentencesSimilar(targetText, speechRecognizer.transcribedText) {
                 speechRecognizer.stopTranscribing()
-                haptic.playHaptic()
-                isPresented = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    navManager.path = .init([.details(tagId: tagId)])
-                }
+                onComplete()
             }
         })
         .alert(isPresented: $isPresented) {
             Alert(title: Text("Congratulations!"), message: Text("You got it right!"))
         }
     }
-}
-
-#Preview {
-    SpeechView(tagId: "q123")
 }

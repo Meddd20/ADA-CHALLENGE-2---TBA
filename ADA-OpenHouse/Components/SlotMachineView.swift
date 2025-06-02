@@ -13,6 +13,7 @@ struct SlotMachineView: View {
     let baseSpinTime = 3.5
     
     var tagId: String
+    var onComplete: (() -> Void)
 
     var body: some View {
         ZStack {
@@ -94,15 +95,9 @@ struct SlotMachineView: View {
                 BackgroundMusicPlayer.shared.stop()
             }
             .onChange(of: manager.visibleJackpotReward != nil) {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    navManager.path = .init([.details(tagId: tagId)])
-                }
+                onComplete()
             }
         }
     }
 }
 
-
-#Preview {
-    SlotMachineView(tagId: "ajwbfj")
-}

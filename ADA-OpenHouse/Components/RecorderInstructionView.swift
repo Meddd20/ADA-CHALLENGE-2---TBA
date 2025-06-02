@@ -14,6 +14,7 @@ struct RecorderInstructionView: View {
     @StateObject var haptic = HapticModel()
     
     var tagId: String
+    var onComplete: (() -> Void)
 
     var body: some View {
         // Instruction Card
@@ -36,12 +37,7 @@ struct RecorderInstructionView: View {
                 .onDisappear { recorder.stopRecording() }
                 .onChange(of: recorder.isTooLoud, {
                     if recorder.isTooLoud {
-                        showAlert = true
-                        haptic.playHaptic(duration: 1.0)
-                        
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                            navManager.path = .init([.details(tagId: tagId)])
-                        }
+                        onComplete()
                     }
                 })
             }
@@ -84,8 +80,4 @@ struct RecorderInstructionView: View {
         }
     }
        
-}
-
-#Preview {
-    RecorderInstructionView(tagId: "123")
 }

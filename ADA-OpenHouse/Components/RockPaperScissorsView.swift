@@ -16,6 +16,8 @@ import SwiftUI
 
 struct RockPaperScissorsView: View {
     var tagId: String
+    var onComplete: (() -> Void)
+
     @State var randomGesture = ["rock", "paper", "scissors"].randomElement() ?? "rock"
     
     @State private var isPresented: Bool = false
@@ -35,12 +37,8 @@ struct RockPaperScissorsView: View {
             .onChange(of: (gesture?.identifier ?? "None") + (gesture?.confidence?.description ?? "None"), {
                 if gesture?.identifier == randomGesture {
                     if gesture?.confidence ?? 0.0 > 0.9 {
-                        isPresented = true
-                        haptic.playHaptic()
                         isDone = true
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                            navManager.path = .init([.details(tagId: tagId)])
-                        }
+                        onComplete()
                     }
                 } else {
                     haptic.playHaptic()
@@ -67,6 +65,3 @@ struct RockPaperScissorsView: View {
     }
 }
 
-#Preview {
-    RockPaperScissorsView(tagId: "123")
-}

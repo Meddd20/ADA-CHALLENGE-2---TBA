@@ -11,7 +11,8 @@ let randomNumber = Double.random(in: 0...360)
 
 struct CompassView: View {
     var tagId: String
-    
+    var onComplete: (() -> Void)
+
     @StateObject private var compass = CompassModel()
     @EnvironmentObject var navManager: NavigationManager<Routes>
     @StateObject private var haptic = HapticModel()
@@ -50,12 +51,8 @@ struct CompassView: View {
                 .padding()
                 .onChange(of: compass.success, {
                     if compass.success {
-                        haptic.playHaptic(duration: 1)
-                        isPresented = true
                         timer?.invalidate()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                            navManager.path = .init([.details(tagId: tagId)])
-                        }
+                        onComplete()
                     }
                 })
                 .onChange(of: compass.grace, {
@@ -83,8 +80,4 @@ struct CompassView: View {
         Spacer()
         Text("Tilt the device to see the heading")
     }
-}
-
-#Preview {
-    CompassView(tagId: "123")
 }

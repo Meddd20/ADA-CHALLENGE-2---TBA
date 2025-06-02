@@ -16,6 +16,8 @@ struct AnomalyView: View {
     @State private var alertTitle = ""
     @State private var alertMessage = ""
     
+    var onComplete: (() -> Void)
+    
     // Define table column layout
     let columns = [
         GridItem(.flexible(minimum: 100)), // Name
@@ -59,13 +61,7 @@ struct AnomalyView: View {
                             .contentShape(Rectangle())
                             .onTapGesture {
                                 if index == model.anomalyIndex {
-                                    alertTitle = "🎯 Correct!"
-                                    alertMessage = "You found the anomaly."
-                                    
-                                    haptic.playHaptic()
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                                        navManager.path = .init([.details(tagId: tagId)])
-                                    }
+                                    onComplete()
                                 } else {
                                     alertTitle = "❌ Nope"
                                     alertMessage = "This row seems normal."
@@ -108,6 +104,3 @@ struct AnomalyView: View {
     }
 }
 
-#Preview {
-    AnomalyView(tagId: "123")
-}

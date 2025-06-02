@@ -6,15 +6,31 @@
 //
 
 import SwiftUI
-
-enum GameViewType: CaseIterable {
-    case punch, flip, recorder, compass, ballBalancing, cameraExpression, rockPaperScissors, wordle, slotMachine, cubeShaper, speechRecognition, anomaly
-}
+import SwiftData
 
 struct InstructionView: View {
     var tagId: String
+    @Environment(\.modelContext) private var context
+    @EnvironmentObject var navManager: NavigationManager<Routes>
+
+//    @State var gameViewType: GameViewType = .anomaly
     @State var gameViewType: GameViewType = GameViewType.allCases.randomElement() ?? .punch
     @State var isPlayingGame: Bool = false
+    @State var isShowAlert: Bool = false
+    
+    @StateObject var haptic = HapticModel()
+
+    
+    func onComplete() {
+        isShowAlert = true
+        haptic.playHaptic()
+        upsertGameViewState(type: gameViewType, isDone: true, context: context)
+        upsertTagViewState(tag: tagId, isDone: true, context: context)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            navManager.path = .init([.details(tagId: tagId)])
+        }
+    }
     
     var body: some View {
         VStack(alignment: .center, spacing: 20) {
@@ -22,39 +38,42 @@ struct InstructionView: View {
                 switch gameViewType {
                 case .punch:
                     Title()
-                    PunchDetection(tagId: tagId)
+                    PunchDetection(tagId: tagId, onComplete: onComplete)
                 case .flip:
                     Title()
-                    FlipReactionView(tagId: tagId)
+                    FlipReactionView(tagId: tagId, onComplete: onComplete)
                 case .recorder:
                     Title()
-                    RecorderInstructionView(tagId: tagId)
+                    RecorderInstructionView(tagId: tagId, onComplete: onComplete)
                 case .compass:
                     Title()
-                    CompassView(tagId: tagId)
+                    CompassView(tagId: tagId, onComplete: onComplete)
                 case .ballBalancing:
-                    BallBalancingGameView(tagId: tagId)
+                    BallBalancingGameView(tagId: tagId, onComplete: onComplete)
                 case .cameraExpression:
                     Title()
-                    CameraExpression(tagId: tagId)
+                    CameraExpression(tagId: tagId, onComplete: onComplete)
                 case .slotMachine:
-                    SlotMachineView(tagId: tagId)
+                    SlotMachineView(tagId: tagId, onComplete: onComplete)
                 case .rockPaperScissors:
                     Title()
-                    RockPaperScissorsView(tagId: tagId)
+                    RockPaperScissorsView(tagId: tagId, onComplete: onComplete)
                 case .wordle:
-                    WordleGameView(tagId: tagId)
+                    WordleGameView(tagId: tagId, onComplete: onComplete)
                 case .cubeShaper:
-                    CubeShaperGameView(tagId: tagId)
+                    CubeShaperGameView(tagId: tagId, onComplete: onComplete)
                 case .speechRecognition:
-                    SpeechView(tagId: tagId)
+                    SpeechView(tagId: tagId, onComplete: onComplete)
                 case .anomaly:
                     Title()
-                    AnomalyView(tagId: tagId)
+                    AnomalyView(tagId: tagId, onComplete: onComplete)
                 }
             } else {
                 InstructionStartView(game: $gameViewType, isPlayingGame: $isPlayingGame)
             }
+        }
+        .alert(isPresented: $isShowAlert) {
+            Alert(title: Text("You WIN!"), message: Text("Congratulations! You completed the game."))
         }
     }
 }

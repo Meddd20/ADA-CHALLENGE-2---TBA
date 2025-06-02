@@ -15,6 +15,7 @@ struct PunchDetection: View {
     @StateObject private var haptic = HapticModel()
     
     var tagId: String
+    var onComplete: (() -> Void)
     
     var body: some View {
         VStack(spacing: 24) {
@@ -82,12 +83,7 @@ struct PunchDetection: View {
         }
         .onChange(of: punchManager.didPunchDetected) { oldValue, newValue in
             if newValue {
-                isPresented = true
-                haptic.playHaptic()
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    navManager.path = .init([.details(tagId: tagId)])
-                }
+                onComplete()
             }
         }
         .alert(isPresented: $isPresented) {
@@ -95,8 +91,4 @@ struct PunchDetection: View {
         }
 
     }
-}
-
-#Preview {
-    PunchDetection(tagId: "alla")
 }

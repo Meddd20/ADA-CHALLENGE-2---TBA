@@ -41,6 +41,7 @@ struct IndexView: View {
             }
         }
         .environmentObject(navigationManager)
+        .modelContainer(for: [GameViewState.self, TagViewState.self])
     }
     
     @ViewBuilder

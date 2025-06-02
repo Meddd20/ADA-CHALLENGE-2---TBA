@@ -11,6 +11,8 @@ import CoreMotion
 
 struct CubeShaperGameView: View {
     var tagId: String
+    var onComplete: (() -> Void)
+
     @EnvironmentObject var navManager: NavigationManager<Routes>
     
     // MARK: - Game State
@@ -312,12 +314,9 @@ struct CubeShaperGameView: View {
         
         if newWinState && !hasWon {
             hasWon = true
-            showWinAlert = true
             showWinAlertAnimation()
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                navManager.path = .init([.details(tagId: tagId)])
-            }
+            onComplete()
             
             SoundEffect.shared.playSoundEffect(soundEffect: "victoryff7")
         }
@@ -516,12 +515,5 @@ struct SceneKitView: UIViewRepresentable {
                 geometry.materials = [material]
             }
         }
-    }
-}
-
-// MARK: - Preview
-struct CubeShaperGameView_Previews: PreviewProvider {
-    static var previews: some View {
-        CubeShaperGameView(tagId: "123")
     }
 }
