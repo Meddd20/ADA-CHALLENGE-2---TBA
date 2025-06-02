@@ -335,7 +335,3 @@ struct AnimatedBackgroundView: View {
         }
     }
 }
-
-#Preview {
-    CoinFlipView(tagId: "vfuwjk")
-}

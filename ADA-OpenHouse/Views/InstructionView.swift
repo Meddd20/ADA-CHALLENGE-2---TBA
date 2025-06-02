@@ -68,7 +68,7 @@ struct InstructionView: View {
                     Title()
                     AnomalyView(tagId: tagId, onComplete: onComplete)
                 case .catMeowMimic:
-                    CatMeowMimicView(passedTagId: tagId, onComplete: onComplete)
+                    CatMeowMimicView(tagId: tagId, onComplete: onComplete)
                 case .coinFlip:
                     CoinFlipView(tagId: tagId, onComplete: onComplete)
                 }

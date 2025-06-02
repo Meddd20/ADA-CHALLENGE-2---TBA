@@ -17,13 +17,14 @@ struct CatMeowMimicView: View {
     var tagId: String
     var onComplete: (() -> Void)
 
-    init(passedTagId: String) {
+    init(tagId: String, onComplete: @escaping () -> Void) {
         let mic = AudioStreamManager()
         let predictor = SoundPredictionManager()
         predictor.configure(with: mic.audioFormat)
         _micManager = StateObject(wrappedValue: mic)
         _predictionManager = StateObject(wrappedValue: predictor)
-        self.tagId = passedTagId
+        self.tagId = tagId
+        self.onComplete = onComplete
     }
 
     var body: some View {
@@ -128,6 +129,3 @@ struct CatMeowMimicView: View {
     }
 }
 
-#Preview {
-    CatMeowMimicView(passedTagId: "hvwufbwi")
-}
