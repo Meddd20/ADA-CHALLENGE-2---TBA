@@ -38,7 +38,6 @@ struct InstructionStartView: View {
     @Binding var isPlayingGame: Bool
     @State private var isRandomizing = false
     @State private var randomizeTimer: Timer?
-    @State private var currentRandomIndex = 0
     
     var body: some View {
         ZStack {
@@ -122,11 +121,12 @@ struct InstructionStartView: View {
     private func startRandomizing() {
         isRandomizing = true
         randomizeTimer?.invalidate()
-        currentRandomIndex = 0
         
         randomizeTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
-            currentRandomIndex = Int.random(in: 0..<instructions.count)
-            instruction = instructions[currentRandomIndex]
+            let randomGame = GameViewType.allCases.randomElement() ?? .punch
+            
+            game = randomGame
+            instruction = instructions.first(where: { $0.type == randomGame }) ?? instructions[0]
         }
 
         // Stop randomizing after 1.2 seconds
