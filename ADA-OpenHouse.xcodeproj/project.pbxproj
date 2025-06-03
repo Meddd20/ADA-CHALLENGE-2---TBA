@@ -279,6 +279,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ADA-OpenHouse/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NFCReaderUsageDescription = "Let us, please";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Let us, please";
@@ -319,6 +320,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "ADA-OpenHouse/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NFCReaderUsageDescription = "Let us, please";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Let us, please";
