@@ -71,6 +71,8 @@ struct InstructionView: View {
                     CatMeowMimicView(tagId: tagId, onComplete: onComplete)
                 case .coinFlip:
                     CoinFlipView(tagId: tagId, onComplete: onComplete)
+                case .simonSays:
+                    SimonSaysScreen(tagId: tagId, onComplete: onComplete)
                 }
             } else {
                 InstructionStartView(game: $gameViewType, isPlayingGame: $isPlayingGame)
