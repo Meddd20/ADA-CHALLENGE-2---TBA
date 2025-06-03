@@ -28,7 +28,8 @@ let instructions: [Instruction] = [
     .init(type: .speechRecognition, icon: "person.line.dotted.person.fill", text: "Listen carefully. Can you repeat it perfectly?"),
     .init(type: .anomaly, icon: "flowchart", text: "Spot the odd one out! Scan the data and tap the anomaly!"),
     .init(type: .catMeowMimic, icon: "cat", text: "Channel your inner animal — mimic the sound!"),
-    .init(type: .coinFlip, icon: "dollarsign.circle", text: "Heads or Tails? Make your call and flip!")
+    .init(type: .coinFlip, icon: "dollarsign.circle", text: "Heads or Tails? Make your call and flip!"),
+    .init(type: .simonSays, icon: "exclamationmark.bubble", text: "Simon Says… Sit or Stand Still! Follow carefully — but only when Simon says!")
 ]
 
 
