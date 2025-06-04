@@ -130,15 +130,17 @@ struct FlipReactionView: View {
                     reactionTime = Date().timeIntervalSince(start)
                     gameStarted = false
                     motion.stopDetectFlipReaction()
+                    
+                    if time <= reactionTreshold {
+                       onComplete()
+                    }
                 } else {
                     isTooEarly = true
                     gameStarted = false
                     motion.stopDetectFlipReaction()
                 }
                 
-                if time <= reactionTreshold {
-                   onComplete()
-                }
+                
             }
         })
         .onAppear {

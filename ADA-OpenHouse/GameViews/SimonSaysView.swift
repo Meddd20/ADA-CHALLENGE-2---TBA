@@ -18,6 +18,8 @@ struct SimonSaysScreen: View {
     @State private var checkTimer: Timer?
     @State private var previousPose = "None"
     @State private var roundStartedAt = Date()
+    @State private var countdownValue = 3
+    @State private var showCountdown = false
     
     var tagId: String
     var onComplete: (() -> Void)
@@ -61,31 +63,39 @@ struct SimonSaysScreen: View {
             VStack(spacing: 0){
                 Spacer().frame(height: 24)
                 
-                Text(isSimonSays ? "🧠 Simon Says" : "")
-                    .font(.system(size: 28, weight: .black, design: .rounded))
-                    .foregroundColor(.indigo)
-                
-                ZStack {
-                    Text(simonSays.uppercased())
-                        .font(.system(size: 54, weight: .heavy, design: .rounded))
-                        .foregroundColor(.black.opacity(0.3))
-                        .offset(x: 3, y: 3)
+                if showCountdown {
+                    Text("\(countdownValue)")
+                        .font(.system(size: 52, weight: .bold, design: .rounded))
+                        .foregroundColor(.yellow)
+                        .transition(.scale)
+                        .animation(.easeInOut, value: countdownValue)
+                } else {
+                    Text(isSimonSays ? "🧠 Simon Says" : "")
+                        .font(.system(size: 28, weight: .black, design: .rounded))
+                        .foregroundColor(.indigo)
                     
-                    Text(simonSays.uppercased())
-                        .font(.system(size: 54, weight: .heavy, design: .rounded))
-                        .foregroundColor(.white)
-                    
-                    Text(simonSays.uppercased())
-                        .font(.system(size: 54, weight: .heavy, design: .rounded))
-                        .foregroundStyle(
-                            LinearGradient(
-                                colors: gradientColors(for: simonSays),
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
+                    ZStack {
+                        Text(simonSays.uppercased())
+                            .font(.system(size: 54, weight: .heavy, design: .rounded))
+                            .foregroundColor(.black.opacity(0.3))
+                            .offset(x: 3, y: 3)
+                        
+                        Text(simonSays.uppercased())
+                            .font(.system(size: 54, weight: .heavy, design: .rounded))
+                            .foregroundColor(.white)
+                        
+                        Text(simonSays.uppercased())
+                            .font(.system(size: 54, weight: .heavy, design: .rounded))
+                            .foregroundStyle(
+                                LinearGradient(
+                                    colors: gradientColors(for: simonSays),
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
                             )
-                        )
+                    }
+                    .animation(.easeInOut, value: simonSays)
                 }
-                .animation(.easeInOut, value: simonSays)
                 
                 Text("Score: \(correctCount)")
                     .font(.system(size: 16, weight: .semibold, design: .rounded))
@@ -166,31 +176,45 @@ struct SimonSaysScreen: View {
     }
     
     func startNewRound() {
-        previousPose = label
         canCheck = false
-        randomizedSimonSays()
+        showCountdown = true
+        countdownValue = 3
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-            let userPose = normalizedPose(label)
-            let expectedPose = normalizedPose(simonSays)
-            var isCorrect = false
-
-            if isSimonSays {
-                isCorrect = userPose == expectedPose
+        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+            if countdownValue > 1 {
+                countdownValue -= 1
             } else {
-                isCorrect = userPose == normalizedPose(previousPose)
-            }
+                timer.invalidate()
+                showCountdown = false
 
-            if isCorrect {
-                correctCount += 1
-                if correctCount == 5 {
-                    onComplete()
-                    return
+                previousPose = label
+                randomizedSimonSays()
+                canCheck = true
+
+                // Optional: Add buffer before auto-checking
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                    let userPose = normalizedPose(label)
+                    let expectedPose = normalizedPose(simonSays)
+                    var isCorrect = false
+
+                    if isSimonSays {
+                        isCorrect = userPose == expectedPose
+                    } else {
+                        isCorrect = userPose == normalizedPose(previousPose)
+                    }
+
+                    if isCorrect {
+                        correctCount += 1
+                        if correctCount == 5 {
+                            onComplete()
+                            return
+                        }
+                    }
+
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                        startNewRound()
+                    }
                 }
-            }
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                startNewRound()
             }
         }
     }
