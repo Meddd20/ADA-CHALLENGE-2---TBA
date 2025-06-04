@@ -10,6 +10,8 @@ import SwiftUI
 
 @main
 struct ADA_OpenHouseApp: App {
+    @StateObject var colorManager = ColorManager()
+    
     init() {
         UIView.appearance().overrideUserInterfaceStyle = .light
     }
@@ -17,9 +19,7 @@ struct ADA_OpenHouseApp: App {
     var body: some Scene {
         WindowGroup {
             IndexView()
-            
+                .environmentObject(colorManager)
         }
     }
-    
-    
 }

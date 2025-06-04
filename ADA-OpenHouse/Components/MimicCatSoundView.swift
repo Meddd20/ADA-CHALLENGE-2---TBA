@@ -22,7 +22,6 @@ struct MimicCatSoundView: View {
                 .font(.title2)
                 .foregroundColor(.gray)
 
-            // Mic animation placeholder
             Circle()
                 .fill(isRecording ? Color.pink : Color.gray.opacity(0.3))
                 .frame(width: 150, height: 150)
@@ -69,14 +68,11 @@ struct MimicCatSoundView: View {
     }
     
     func startRecording() {
-        // Start recording audio and live waveform (optional)
         resultText = "Listening... 🎤"
         confidence = 0.0
     }
     
     func stopRecordingAndPredict() {
-        // Stop and run prediction
-        // Simulated result for now
         let isCat = Bool.random()
         confidence = Double.random(in: 0.6...1.0)
         resultText = isCat ? "You sound like a cat! 🐱" : "Hmm... more like a dog 🐶"

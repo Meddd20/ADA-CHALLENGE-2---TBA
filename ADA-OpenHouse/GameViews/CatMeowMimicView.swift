@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct CatMeowMimicView: View {
-    @EnvironmentObject var navManager: NavigationManager<Routes>
-
     @StateObject private var micManager = AudioStreamManager()
     @StateObject private var predictionManager = SoundPredictionManager()
 
@@ -20,7 +18,6 @@ struct CatMeowMimicView: View {
     init(tagId: String, onComplete: @escaping () -> Void) {
         let mic = AudioStreamManager()
         let predictor = SoundPredictionManager()
-        predictor.configure(with: mic.audioFormat)
         _micManager = StateObject(wrappedValue: mic)
         _predictionManager = StateObject(wrappedValue: predictor)
         self.tagId = tagId
@@ -112,6 +109,7 @@ struct CatMeowMimicView: View {
             if !isListening {
                 isListening = true
                 micManager.start()
+                predictionManager.configure(with: micManager.audioFormat)
                 SoundEffect.shared.playSoundEffect(soundEffect: "unfriendly-meow", fileExtension: "wav")
             }
         }

@@ -7,6 +7,10 @@
 
 import SwiftUI
 
-class ColorManger: ObservableObject {
-    @Published var primaryColor: Color = .indigo
+class ColorManager: ObservableObject {
+    @Published var primaryColor: Color = .primaryBlue
+    @Published var primaryDarkColor: Color = .darkBlue
+    
+    @Published var completedPrimaryColor: Color = .primaryBlue
+    @Published var completedPrimaryDarkColor: Color = .darkBlue
 }

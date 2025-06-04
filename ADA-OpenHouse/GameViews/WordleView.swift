@@ -17,7 +17,7 @@ struct WordleGameView: View {
     var body: some View {
         VStack(spacing: 20) { // This is the main VStack for all content
             // Title
-            Text("WORLDE")
+            Text("WORDLE")
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .foregroundColor(.primary)

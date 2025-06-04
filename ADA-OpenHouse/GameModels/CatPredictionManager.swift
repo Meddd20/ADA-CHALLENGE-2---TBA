@@ -56,13 +56,13 @@ class SoundPredictionManager: NSObject, ObservableObject, SNResultsObserving {
 
         DispatchQueue.main.async {
             print("Confidence Level: \(top.confidence)")
-            if top.identifier == "cat" && top.confidence > 0.8 {
+            if top.identifier == "cat" && top.confidence > 0.7 {
                 if self.catDetectedStartTime == nil {
                     self.catDetectedStartTime = Date()
                 }
 
                 let duration = Date().timeIntervalSince(self.catDetectedStartTime!)
-                if duration >= 0.8 && !self.isConfirmCat {
+                if duration >= 0.7 && !self.isConfirmCat {
                     self.predictionLabel = "cat"
                     self.predictionConfidence = top.confidence
                     self.isConfirmCat = true
