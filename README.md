@@ -86,3 +86,10 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Acknowledgments
 
 - Thanks to all contributors and supporters of the ADA-OpenHouse project.
+
+## Contributors
+
+- **Muhammad Ramdan** ([@dadanisme](https://github.com/dadanisme))
+- **Wira A. Wibiasana** ([@wira-atm](https://github.com/wira-atm))
+- **Medhiko Biraja** ([@Meddd20](https://github.com/Meddd20))
+- **Felisha Levana** ([@leevanaa](https://github.com/leevanaa))
