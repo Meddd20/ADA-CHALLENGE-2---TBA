@@ -1,6 +1,6 @@
-# ADA-OpenHouse
+# iTour
 
-ADA-OpenHouse is an interactive iOS application designed to provide an engaging tour experience using NFC tags and a variety of minigames. The app allows users to explore hidden spots, complete challenges, and enjoy a fun, interactive journey.
+iTour is an interactive iOS application designed to provide an engaging tour experience using NFC tags and a variety of minigames. The app allows users to explore hidden spots, complete challenges, and enjoy a fun, interactive journey.
 
 ## Features
 
@@ -57,7 +57,7 @@ ADA-OpenHouse is an interactive iOS application designed to provide an engaging 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/ADA-OpenHouse.git
+   git clone https://github.com/yourusername/iTour.git
    ```
 
 2. Open the project in Xcode:
@@ -85,7 +85,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Acknowledgments
 
-- Thanks to all contributors and supporters of the ADA-OpenHouse project.
+- Thanks to all contributors and supporters of the iTour project.
 
 ## Contributors
 
