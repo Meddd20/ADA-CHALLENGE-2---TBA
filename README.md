@@ -90,6 +90,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Contributors
 
 - **Muhammad Ramdan** ([@dadanisme](https://github.com/dadanisme))
-- **Wira A. Wibiasana** ([@wira-atm](https://github.com/wira-atm))
+- **Wira A. Wibisana** ([@wasabi-atm](https://github.com/wasabi-atm))
 - **Medhiko Biraja** ([@Meddd20](https://github.com/Meddd20))
 - **Felisha Levana** ([@leevanaa](https://github.com/leevanaa))
