@@ -57,7 +57,7 @@ iTour is an interactive iOS application designed to provide an engaging tour exp
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/iTour.git
+   git clone https://github.com/Meddd20/iTour.git
    ```
 
 2. Open the project in Xcode:
