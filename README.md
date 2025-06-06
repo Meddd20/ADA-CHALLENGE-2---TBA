@@ -4,23 +4,27 @@ ADA-OpenHouse is an interactive iOS application designed to provide an engaging 
 
 ## Features
 
-- **NFC Tag Scanning**: Scan NFC tags to discover hidden spots and unlock minigames.
-- **Interactive Minigames**:
-  1.  **Simon Says**: Follow instructions to perform specific poses.
-  2.  **Wordle**: Guess the random 5-letter word.
-  3.  **Cat Meow Mimic**: Mimic cat sounds to prove you're one of the felines.
-  4.  **Slot Machine**: Pull the lever and try your luck to win coins.
-  5.  **Flip Reaction**: Test your reflexes by flipping your phone when prompted.
-  6.  **Compass**: Tilt your device to match the required heading.
-  7.  **Punch Detection**: Punch as fast as you can to test your reflex power.
-  8.  **Ball Balancing**: Tilt to guide the ghost to the goal.
-  9.  **Anomaly Detection**: Identify anomalies in a dataset.
-  10. **Rock Paper Scissors**: Play against the computer using hand gestures.
-  11. **Recorder Instruction**: Scream as loud as you can to complete the challenge.
-  12. **Cube Shaper**: Shape a cube to match the target dimensions.
-  13. **Speech View**: Engage in speech-based interactions.
-  14. **Camera Expression**: Use camera expressions for interactive features.
-  15. **Coin Flip**: Flip a coin to test your luck.
+### NFC Tag Scanning
+
+Scan NFC tags to discover hidden spots and unlock minigames.
+
+### Interactive Minigames
+
+1.  **Simon Says**: Follow instructions to perform specific poses.
+2.  **Wordle**: Guess the random 5-letter word.
+3.  **Cat Meow Mimic**: Mimic cat sounds to prove you're one of the felines.
+4.  **Slot Machine**: Pull the lever and try your luck to win coins.
+5.  **Flip Reaction**: Test your reflexes by flipping your phone when prompted.
+6.  **Compass**: Tilt your device to match the required heading.
+7.  **Punch Detection**: Punch as fast as you can to test your reflex power.
+8.  **Ball Balancing**: Tilt to guide the ghost to the goal.
+9.  **Anomaly Detection**: Identify anomalies in a dataset.
+10. **Rock Paper Scissors**: Play against the computer using hand gestures.
+11. **Recorder Instruction**: Scream as loud as you can to complete the challenge.
+12. **Cube Shaper**: Shape a cube to match the target dimensions.
+13. **Speech View**: Engage in speech-based interactions.
+14. **Camera Expression**: Use camera expressions for interactive features.
+15. **Coin Flip**: Flip a coin to test your luck.
 
 ## Technologies Used
 
